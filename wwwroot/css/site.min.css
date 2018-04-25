@@ -1,0 +1,47 @@
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+label {
+    padding: 0.375rem 0ps;
+}
+
+.text-danger {
+    height: 25px;
+}
+
+.error .text-danger {
+    height: 60px;
+}
+
+.error h3, .error h4, .error p {
+    margin: 40px 60px;
+}
+
+.unique {
+    position: absolute;
+    top: 40px;
+}
+
+textarea {
+    height: 100px;
+}
+
+.table-responsive {
+    height: 550px;
+    overflow-y: auto;
+}
+
+th {
+    width: 16%;
+}
+td .btn.btn-dark {
+    width: 100%;
+}
+td~td .btn.btn-dark {
+    width: 90px;
+}

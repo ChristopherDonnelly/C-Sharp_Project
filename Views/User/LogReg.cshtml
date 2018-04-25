@@ -1,0 +1,17 @@
+@model C_Sharp_Project.Models.LogRegBundleModel
+
+@{
+    ViewData["Title"] = "Login/Registration";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h1 class="pt-5 text-center">Welcome!</h1>
+    </div>
+    <div class="col-6">
+        @Html.Partial("Register", @Model.Register)
+    </div>
+    <div class="col-6">
+        @Html.Partial("Login", @Model.Login)
+    </div>
+</div>
