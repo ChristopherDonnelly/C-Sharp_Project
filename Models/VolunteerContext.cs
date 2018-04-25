@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
- 
+using VolunteerPlanner.Models;
+
 namespace C_Sharp_Project.Models
 {
     public class VolunteerContext : DbContext
@@ -8,10 +9,10 @@ namespace C_Sharp_Project.Models
 
         public DbSet<User> users { get; set; }
 
-        // public DbSet<Events> events { get; set; }
-        // public DbSet<Tasks> tasks { get; set; }
-        // public DbSet<Locations> locatoins { get; set; }
-        // public DbSet<EventVolunteers> event_volunteers { get; set; }
-        // public DbSet<TaskVolunteers> task_volunteers { get; set; }
+        public DbSet<Event> events { get; set; }
+        public DbSet<Task> tasks { get; set; }
+        public DbSet<Location> locations { get; set; }
+        public DbSet<EventVolunteer> event_volunteers { get; set; }
+        public DbSet<TaskVolunteer> task_volunteers { get; set; }
     }
 }

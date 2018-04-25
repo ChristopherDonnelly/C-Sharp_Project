@@ -15,5 +15,12 @@ namespace VolunteerPlanner.Models
         public string Address { get; set; }
         public int CoordinatorId { get; set; }
         public string Organization { get; set; }
+
+        public List<EventVolunteer> EventVolunteers { get; set; }
+ 
+        public Event()
+        {
+            EventVolunteers = new List<EventVolunteer>();
+        }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using C_Sharp_Project.Models;
@@ -21,5 +22,12 @@ namespace VolunteerPlanner.Models
 
         [ForeignKey("Location")]
         public Location Location { get; set; }
+
+        public List<TaskVolunteer> TaskVolunteers { get; set; }
+ 
+        public Task()
+        {
+            TaskVolunteers = new List<TaskVolunteer>();
+        }
     }
 }

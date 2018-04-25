@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using VolunteerPlanner.Models;
 
 namespace C_Sharp_Project.Models
 {
@@ -14,14 +15,14 @@ namespace C_Sharp_Project.Models
         public string Email { get; set; }
         public string Password { get; set; }
 
-        // public List<Ideas> Ideas { get; set; }
+        public List<Event> Events { get; set; }
 
-        // public List<Likes> Likes { get; set; }
+        public List<Task> Tasks { get; set; }
  
-        // public User()
-        // {
-        //     Likes = new List<Likes>();
-        //     Ideas = new List<Ideas>();
-        // }
+        public User()
+        {
+            Tasks = new List<Task>();
+            Events = new List<Event>();
+        }
     }
 }
