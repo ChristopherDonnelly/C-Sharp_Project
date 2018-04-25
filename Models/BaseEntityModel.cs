@@ -2,10 +2,8 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace C_Sharp_Project {
+namespace C_Sharp_Project.Models {
     public abstract class BaseEntity {
-        [Key]
-        public int UserId { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedAt { get; set; } = DateTime.Now;
