@@ -21,7 +21,7 @@ namespace VolunteerPlanner.Models
         public Event Event { get; set; }
 
         [ForeignKey("Location")]
-        public Location Location { get; set; }
+        public Location Loc { get; set; }
 
         public List<TaskVolunteer> TaskVolunteers { get; set; }
  
