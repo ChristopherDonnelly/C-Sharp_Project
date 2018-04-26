@@ -6,109 +6,132 @@
 
 <div class="row">
     <div class="col-12 mx-auto mt-5">
-        <form asp-controller="Create" asp-action="AddLocation" method="post" class="form-control">
-            <h2 class="text-center">@ViewData["Title"]</h2>
-            <div class="col-5 d-inline-block align-top px-0">
-                <div class="col-12 d-inline-block p-0 align-text-top my-2">
-                    <label asp-for="Name" class="d-inline-block col-3 p-0 text-right"></label>
-                    <input asp-for="Name" class="form-control d-inline-block col-8 m-auto" placeholder="Enter Location Name" aria-label="Enter Location Name" />
-                    <span asp-validation-for="Name" class="d-block pl-3 offset-3 text-danger"></span>
-                </div>
-                <div class="col-12 d-inline-block p-0 align-text-top my-2 text-right pr-5">
-                    <button class="btn btn-dark" type="submit">Add Location</button>
-                </div>
-            </div>
-            <div class="col-6 d-inline-block align-top px-0">
-                <div id="map" class="intrinsic-container intrinsic-container-16x9">
-
-                </div>
-            </div>
-
-            <div id="infowindow-content" class="d-none">
-                <form id='map-form'>
-                    Address/Postcode: <input id='map-from-address' type='text' />
-                    <input type='submit' id='map-go' value='Go' />
-                </form>
-            </div>
-
-            <script>
-                var map;
-                var markers = [];
-                var infowindow;
-                
-                function initMap() {
-                    map = new google.maps.Map(document.getElementById('map'), {
-                        zoom: 16,
-                        center: {lat: -34.397, lng: 150.644},
-                        disableDefaultUI: true,
-                        zoomControl: true
-                    });
-                    var geocoder = new google.maps.Geocoder();
-
-                    geocodeAddress(geocoder, map);
-
-                    infowindow = new google.maps.InfoWindow();
-
-                    map.addListener('click', function(e) {
-                        addMarker(e.latLng);
-                    });
-                }
-
-                function geocodeAddress(geocoder, resultsMap) {
-                    geocoder.geocode({'address': "Bellevue Botanical Garden"}, function(results, status) {
-                        if(status === 'OK') {
-                            resultsMap.setCenter(results[0].geometry.location);
-                        } else {
-                            alert('Geocode was not successful for the following reason: ' + status);
-                        }
-                    });
-                }
-
-                function addMarker(position){
-                    markers.push(new google.maps.Marker({
-                        position: position,
-                        map: map,
-                        draggable:true,
-                        animation: google.maps.Animation.DROP
-                    }));
-
-                    for(let i=0; i<markers.length; i++){
-                        let marker = markers[i];
-
-                        console.log(marker)
-                        // google.maps.event.addListener(marker, 'click', setPositionAsContent);
-
-                        //google.maps.event.addListener(marker, "click", function(){
-                        //    infowindow.setContent(this.position.toString());
-                        //    infowindow.open(this.map, this);
-                        //});
-
-                        google.maps.event.addListener(marker, 'click', (function(marker) {
-                            return function() {
-                                infowindow.setContent('<form><input class="form-control form-control-sm" type="text" placeholder="Enter Location Name" /><button class="col btn btn-dark btn-sm mt-2" type="submit">Add Location</button></form>');
-                                infowindow.open(map, marker);
-                            }
-                        })(marker));
-
-                        google.maps.event.addListener(marker, 'dragend', function() {
-                            console.log(this.position.lat());
-                            console.log(this.position.lng());
-                        })
-                    }
-
-                }
-
-                function setPositionAsContent(marker){
-                    var infowindow = new google.maps.InfoWindow(
+        <h2 class="text-center">@ViewData["Title"]</h2>
+        <div class="col-5 d-inline-block align-top px-0">
+            <div class="col-12 d-inline-block p-0 align-text-top my-2">
+                <h4>Event Name: @Model.Event.Name</h4>
+                <p>Event Address: @Model.Event.Address</p>
+                @{
+                    foreach (var location in @Model.Locations)
                     {
-                        content: "<div class=infowindow><h1>Bradford</h1><p>Population: 467,665</p></div>"
-                    });
-                    
-                    infowindow.open(map, marker);
+                        <p>@location.Name</p>
+                    }
+                }
+            </div>
+        </div>
+        <div class="col-6 d-inline-block align-top px-0">
+            <div id="map" class="intrinsic-container intrinsic-container-16x9">
+
+            </div>
+        </div>
+
+        <div id="infowindow-content" class="d-none">
+            <form id='map-form'>
+                Address/Postcode: <input id='map-from-address' type='text' />
+                <input type='submit' id='map-go' value='Go' />
+            </form>
+        </div>
+
+        <script>
+            var map;
+            var locations = [];
+            var markers = [];
+            var infowindow;
+
+            @foreach(var location in @Model.Locations)
+            {
+                @:locations.push(['@location.Name', '@location.Lat', '@location.Lng']);
+            }
+
+            console.log(locations.toString());
+            
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 16,
+                    center: {lat: -34.397, lng: 150.644},
+                    disableDefaultUI: true,
+                    zoomControl: true
+                });
+                var geocoder = new google.maps.Geocoder();
+
+                geocodeAddress(geocoder, map);
+
+                infowindow = new google.maps.InfoWindow();
+
+                for(let count=0; count<locations.length; count++){
+                    console.log('Name: '+locations[count][0])
+                    console.log('Lat: '+locations[count][1])
+                    console.log('Lng: '+locations[count][2])
+                    addMarker(new google.maps.LatLng(locations[count][1], locations[count][2]), locations[count][0]);
                 }
 
-            </script>
-            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcFLcB_cuAHwGsWGlwHnYSY9VQcz3ioLc&callback=initMap"></script>
-        </form>
+                map.addListener('click', function(e) {
+                    addMarker(e.latLng);
+                });
+
+            }
+
+            function geocodeAddress(geocoder, resultsMap) {
+                geocoder.geocode({'address': '@Model.Event.Address'}, function(results, status) {
+                    if(status === 'OK') {
+                        resultsMap.setCenter(results[0].geometry.location);
+                    } else {
+                        alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                });
+            }
+
+            function addMarker(position, name){
+                // console.log(position);
+                markers.push(new google.maps.Marker({
+                    position: position,
+                    map: map,
+                    draggable:true,
+                    animation: google.maps.Animation.DROP,
+                    title: name
+                }));
+
+                for(let i=0; i<markers.length; i++){
+                    let marker = markers[i];
+
+                    // console.log(marker)
+                    // google.maps.event.addListener(marker, 'click', setPositionAsContent);
+
+                    //google.maps.event.addListener(marker, "click", function(){
+                    //    infowindow.setContent(this.position.toString());
+                    //    infowindow.open(this.map, this);
+                    //});
+
+                    google.maps.event.addListener(marker, 'click', (function(marker) {
+                        return function() {
+                            if(marker.title != 'undefined'){
+                                infowindow.setContent('<strong>'+marker.title+'</strong><br><form><button class="col btn btn-dark btn-sm mt-2" type="submit">Remove Location</button></form>');
+                            }else{
+                                infowindow.setContent('<form><input class="form-control form-control-sm" type="text" placeholder="Enter Location Name" /><button class="col btn btn-dark btn-sm mt-2" type="submit">Add Location</button></form>');
+                            }
+                            infowindow.open(map, marker);
+                        }
+                    })(marker));
+
+                    google.maps.event.addListener(marker, 'dragend', function() {
+                        console.log(this.position.lat());
+                        console.log(this.position.lng());
+                    })
+                }
+
+            }
+
+            function setPositionAsContent(marker){
+                var infowindow = new google.maps.InfoWindow(
+                {
+                    content: "<div class=infowindow><h1>Bradford</h1><p>Population: 467,665</p></div>"
+                });
+                
+                infowindow.open(map, marker);
+            }
+
+        </script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcFLcB_cuAHwGsWGlwHnYSY9VQcz3ioLc&callback=initMap"></script>
+
     </div>
 </div>

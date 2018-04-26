@@ -19,9 +19,9 @@ namespace VolunteerPlanner.Models
         public string Name { get; set; }
 
         [Display(Name = "Latitude: ")]
-        public string Lat { get; set; }
+        public double Lat { get; set; }
 
         [Display(Name = "Longitude: ")]
-        public string Long { get; set; }
+        public double Lng { get; set; }
     }
 }
