@@ -26,5 +26,19 @@ namespace VolunteerPlanner.Models
             EventVolunteers = new List<EventVolunteer>();
             Locations = new List<Location>();
         }
+
+        public bool HasJoined(int userId)
+        {
+            bool joined = false;
+            foreach(EventVolunteer user in EventVolunteers)
+            {
+                if(user.User.UserId == userId)
+                {
+                    joined = true;
+                }
+            }
+            return joined;
+        }
+        
     }
 }

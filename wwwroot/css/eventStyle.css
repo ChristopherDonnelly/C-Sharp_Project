@@ -1,0 +1,10 @@
+.card {
+    width: 280px;
+    text-align: center;
+}
+.head {
+    font-size: 20px;
+}
+/* .card-header, .card-footer {
+    background-color: none;
+} */

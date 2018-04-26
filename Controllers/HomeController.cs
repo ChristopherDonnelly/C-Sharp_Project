@@ -66,21 +66,20 @@ namespace C_Sharp_Project.Controllers
 
 
         [HttpGet]
-        [Route("DeleteEvent/{EventId}")]
-        public IActionResult DeleteEvent(int EventId){
+        [Route("DeleteEvent/{eventId}")]
+        public IActionResult DeleteEvent(int eventId){
             if(isLoggedIn()){
                 setSessionViewData();
 
-                // Ideas idea = _context.ideas.SingleOrDefault(u => u.IdeaId == IdeaId);
+                Event EVENT = _context.events.SingleOrDefault(e => e.EventId == eventId);
 
-                // if(idea != null){
-                //     if(idea.IdeaCreatorId == (int)ViewData["UserId"]){
-                //         _context.ideas.Remove(idea);   
-                //         _context.SaveChanges();
-                //     }
-                // }
-
-                return RedirectToAction("Home");
+                if(EVENT != null){
+                    if(EVENT.CoordinatorId == (int)ViewData["UserId"]){
+                        _context.events.Remove(EVENT);   
+                        _context.SaveChanges();
+                    }
+                }
+                return RedirectToAction("AllEvents");
             }else{
                 return RedirectToAction(_action, _controller);
             }
@@ -92,7 +91,6 @@ namespace C_Sharp_Project.Controllers
         {
             return View("Dummy");
         }
-
 
         [Route("{*url}")]
         public IActionResult Error()
@@ -115,6 +113,29 @@ namespace C_Sharp_Project.Controllers
             }else{
                 return RedirectToAction(_action, _controller);
             }
+        }
+
+        [HttpGet]
+        [Route("JoinLeave/{eventId}/{location}")]
+        public IActionResult JoinLeave(int eventId, string location)
+        {
+            if (isLoggedIn())
+            {
+                setSessionViewData();
+                int userId = (int)ViewData["UserId"];
+
+                EventVolunteer eventJoin = _context.event_volunteers.Where(eVolunteer => eVolunteer.EventId == eventId).SingleOrDefault(u => u.UserId == userId);
+
+                if(eventJoin != null)
+                {
+                    _context.event_volunteers.Remove(eventJoin);
+                } else {
+                    _context.event_volunteers.Add(new EventVolunteer{ EventId = eventId, UserId =  userId});
+                }
+                _context.SaveChanges();
+                return RedirectToAction(location);
+            }
+            return RedirectToAction(_action, _controller);
         }
 
         [HttpGet]

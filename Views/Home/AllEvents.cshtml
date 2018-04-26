@@ -1,17 +1,35 @@
 @model List<VolunteerPlanner.Models.Event>
+<link rel="stylesheet" href="~/css/eventStyle.css" />
 <h3>Welcome, @ViewData["Username"]</h3>
-<h1>All Events</h1>
 
-<!-- <table>
-    <thead>
-        <th>Event</th>
-        <th>Description</th>
-        <th>Start Date</th>
-        <th>Duration</th>
-        <th>Actions</th>
-    </thead>
-    <tbody>
-        
-    </tbody>
-</table> -->
+<div class="allEventsContainer">
+    <h1>All Events</h1>
+    <a asp-controller="Home" asp-action="New">New Event</a>
+    @foreach(var e in @Model)
+    {
+        <div class="card">
+            <div class="card-header">
+                <a class="close" aria-label="Close" asp-controller="Home" asp-action="DeleteEvent" asp-route-eventId="@e.EventId">
+                <span aria-hidden="true">&times;</span>
+                </a>
+                <a href="">@e.Name</a>
+            </div>
+            <div class="card-body">@e.Description</div> 
+            <div class="card-footer">
+                <a asp-controller="Home" asp-action="JoinLeave" asp-route-eventId="@e.EventId" asp-route-location="AllEvents">
+                    @{
+                        if(@e.HasJoined( (int) @ViewData["UserId"] ))
+                        {
+                            <span>Leave</span>
+                        } else {
+                            <span>Join</span>
+                        }
+                    }
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+
 
