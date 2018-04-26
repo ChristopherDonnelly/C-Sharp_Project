@@ -32,6 +32,8 @@ namespace C_Sharp_Project.Controllers
                 setSessionViewData();
                 GetEventInfo(id);
                 GetUserInfo();
+                ViewBag.AssignedVolunteers = AssignedVolunteerInfo(id);
+                ViewBag.UnassignedVolunteers = UnassignedVolunteerInfo(id);
                 return View();
             }else{
                 return RedirectToAction(_action, _controller);
@@ -82,11 +84,43 @@ namespace C_Sharp_Project.Controllers
         }
         public Event GetEventInfo(int Id)
         {
-            Event ConfirmedEvent = _context.events.Include(e => e.EventVolunteers).ThenInclude(u => u.User).Include(t => t.Tasks).ThenInclude(l => l.Loc).SingleOrDefault(ev => ev.EventId == Id);
-
+            Event ConfirmedEvent = _context.events.Include(e => e.EventVolunteers).ThenInclude(u => u.User).Include(t => t.Tasks).ThenInclude(l => l.Loc).Include(ta => ta.Tasks).ThenInclude(v => v.TaskVolunteers).SingleOrDefault(ev => ev.EventId == Id);
             ViewBag.ConfirmedEvent = ConfirmedEvent;
-
             return ConfirmedEvent;
+        }
+
+        public List<User> AssignedVolunteerInfo(int Id)
+        {
+            Event ConfirmedEvent = GetEventInfo(Id);
+            List<User> AssignedVolunteers = new List<User>();
+            foreach(var task in ConfirmedEvent.Tasks)
+            {
+                foreach(var tvol in task.TaskVolunteers)
+                {
+                    AssignedVolunteers.Add(tvol.User);
+                }
+            }
+            return AssignedVolunteers;
+        }
+
+        public List<User> UnassignedVolunteerInfo(int Id)
+        {
+            Event ConfirmedEvent = GetEventInfo(Id);
+            List<User> AssignedVolunteers = AssignedVolunteerInfo(Id);
+            List<User> UnassignedVolunteers = new List<User>();
+            foreach(var evol in ConfirmedEvent.EventVolunteers)
+            {
+                UnassignedVolunteers.Add(evol.User);
+                foreach(var person in AssignedVolunteers)
+                {
+                    System.Console.WriteLine("Assigned User: " + person.FirstName);
+                    if(person.UserId == evol.UserId)
+                    {
+                        UnassignedVolunteers.Remove(evol.User);
+                    }
+                }
+            }
+            return UnassignedVolunteers;
         }
     }
 }
