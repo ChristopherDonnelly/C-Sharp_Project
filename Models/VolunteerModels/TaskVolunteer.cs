@@ -15,6 +15,6 @@ namespace VolunteerPlanner.Models
 
         [ForeignKey("Task")]
         public int TaskId { get; set; }
-        public Task Task { get; set; }
+        public TaskInfo Task { get; set; }
     }
 }

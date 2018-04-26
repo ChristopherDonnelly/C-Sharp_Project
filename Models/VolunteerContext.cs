@@ -10,7 +10,7 @@ namespace C_Sharp_Project.Models
         public DbSet<User> users { get; set; }
 
         public DbSet<Event> events { get; set; }
-        public DbSet<Task> tasks { get; set; }
+        public DbSet<TaskInfo> tasks { get; set; }
         public DbSet<Location> locations { get; set; }
         public DbSet<EventVolunteer> event_volunteers { get; set; }
         public DbSet<TaskVolunteer> task_volunteers { get; set; }

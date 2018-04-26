@@ -25,8 +25,8 @@ namespace C_Sharp_Project.Controllers
         }
 
         [HttpGet]
-        [Route("CreateLocation")]
-        public IActionResult CreateLocation()
+        [Route("CreateLocation/{EventId}")]
+        public IActionResult CreateLocation(int EventId)
         {
             if(isLoggedIn()){
                 setSessionViewData();
@@ -50,7 +50,10 @@ namespace C_Sharp_Project.Controllers
                 // }
                 // Console.WriteLine("*************************************");
 
-                return View();
+                Event Event = _context.events.Include( j => j.EventVolunteers ).ThenInclude( u => u.User ).SingleOrDefault( e => e.EventId == EventId);
+                List<Location> Locations = _context.locations.Include( j => j.Event ).Where(e => e.EventId == EventId).ToList();
+
+                return View(new LocationsEventBundleModel{ Event = Event, Locations = Locations });
             }else{
                 return RedirectToAction(_action, _controller);
             }
