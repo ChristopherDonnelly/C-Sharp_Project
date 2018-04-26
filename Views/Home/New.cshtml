@@ -1,0 +1,48 @@
+@model VolunteerPlanner.Models.Event
+
+<div class="header">
+    <a asp-controller="Events" asp-action="Home">Home</a>
+    <a asp-controller="User" asp-action="Logoff">Log Out</a>
+    <h1>Add an Event</h1>
+</div>
+<form asp-controller="Home" asp-action="CreateEvent" method="POST" class="form-control">
+    <input asp-for="CoordinatorId" type="hidden">
+   
+    <div class="col-12 mb-3">
+        <label asp-for="Name" class="d-inline-block col-3 p-0 text-right"></label>
+        <input asp-for="Name" class="form-control d-inline-block col-8 m-auto" placeholder="Enter Name" aria-label="Enter Name" />
+        <span asp-validation-for="Description" class="d-block pl-3 offset-3 text-danger"></span>
+    </div>
+    <div class="col-12 mb-3">
+        <label asp-for="Description" class="d-inline-block col-3 p-0 text-right"></label>
+        <input asp-for="Description" class="form-control d-inline-block col-8 m-auto" placeholder="Enter Description" aria-label="Enter Description" />
+        <span asp-validation-for="Description" class="d-block pl-3 offset-3 text-danger"></span>
+    </div>
+    <div class="col-12 mb-3">
+        <label asp-for="StartDate" class="d-inline-block col-3 p-0 text-right"></label>
+        <input asp-for="StartDate" class="form-control d-inline-block col-7 m-auto" placeholder="Enter StartDate" aria-label="Enter Date" />
+        <i class="material-icons align-middle">date_range</i>
+        <span asp-validation-for="StartDate" class="d-block pl-3 offset-3 text-danger"></span>
+    </div>
+    <div class="col-12 mb-3">
+        <label asp-for="EndDate" class="d-inline-block col-3 p-0 text-right"></label>
+        <input asp-for="EndDate" class="form-control d-inline-block col-7 m-auto" placeholder="Enter EndDate" aria-label="Enter EndDate" />
+        <i class="material-icons align-middle">date_range</i>
+        <span asp-validation-for="EndDate" class="d-block pl-3 offset-3 text-danger"></span>
+    </div>
+    <div class="col-12 mb-3">
+        <label asp-for="Address" class="d-inline-block col-3 p-0 text-right"></label>
+        <input asp-for="Address" class="form-control d-inline-block col-8 m-auto" placeholder="Enter Title" aria-label="Enter Title" />
+        <span asp-validation-for="Address" class="d-block pl-3 offset-3 text-danger"></span>
+    </div>
+    <div class="col-12 mb-3">
+        <label asp-for="Organization" class="d-inline-block col-3 p-0 text-right"></label>
+        <input asp-for="Organization" class="form-control d-inline-block col-8 m-auto" placeholder="Enter Title" aria-label="Enter Title" />
+        <span asp-validation-for="Organization" class="d-block pl-3 offset-3 text-danger"></span>
+    </div>
+
+    <div class="col-12 text-right pr-5">
+        <button type="submit" class="btn btn-dark">Add Event</button>
+    </div>
+
+</form>

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using C_Sharp_Project.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using VolunteerPlanner.Models;
 
 namespace C_Sharp_Project.Controllers
 {
@@ -24,16 +25,42 @@ namespace C_Sharp_Project.Controllers
         }
 
         [HttpGet]
-        [Route("Home")]
-        public IActionResult Home()
+        [Route("AllEvents")]
+        public IActionResult AllEvents()
         {
-            if(isLoggedIn()){
+            if (isLoggedIn())
+            {
                 setSessionViewData();
-                
-                return View();
-            }else{
+
+                List<Event> allEvents = _context.events.Include(EVENT => EVENT.Coordinator).Include(eventt => eventt.EventVolunteers).ThenInclude(eVolunteer => eVolunteer.User).ToList();
+                return View("AllEvents", allEvents);
+            }
+            return RedirectToAction("Login", "User");
+        }
+
+        [HttpPost]
+        [Route("CreateEvent")]
+        public IActionResult CreateEvent(Event eventInfo) {
+            if (isLoggedIn()) {
+
+                if (ModelState.IsValid)
+                {
+                    setSessionViewData();
+                    
+                    User user = _context.users.SingleOrDefault(u => u.UserId == (int)ViewData["UserId"]);
+
+                    eventInfo.Coordinator = user; 
+                    _context.events.Add(eventInfo);
+                    _context.event_volunteers.Add(new EventVolunteer{  EventId = eventInfo.EventId, UserId = (int)ViewData["UserId"] });
+                    _context.SaveChanges();
+
+                    return RedirectToAction("Dummy", new { eventId = eventInfo.EventId }); 
+                    // Dashboard.cshtml, View Details, Controller Details (Mark's)                
+                }
+            } else {
                 return RedirectToAction(_action, _controller);
             }
+            return View("New", eventInfo);
         }
 
 
@@ -59,6 +86,13 @@ namespace C_Sharp_Project.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("Dummy/{eventId}")]
+        public IActionResult Dummy(int eventId)
+        {
+            return View("Dummy");
+        }
+
 
         [Route("{*url}")]
         public IActionResult Error()
@@ -68,6 +102,29 @@ namespace C_Sharp_Project.Controllers
             return View(new ErrorViewModel{
                 RequestId = "404"
             });
+        }
+
+        [HttpGet]
+        [Route("Home")]
+        public IActionResult Home()
+        {
+            if(isLoggedIn()){
+                setSessionViewData();
+                
+                return View();
+            }else{
+                return RedirectToAction(_action, _controller);
+            }
+        }
+
+        [HttpGet]
+        [Route("New")]
+        public IActionResult New()
+        {
+            if (isLoggedIn()) {
+                return View(new Event());
+            }
+            return RedirectToAction(_action, _controller);
         }
 
         private void setSessionViewData()

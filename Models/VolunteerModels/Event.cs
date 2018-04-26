@@ -14,6 +14,7 @@ namespace VolunteerPlanner.Models
         public DateTime EndDate { get; set; }
         public string Address { get; set; }
         public int CoordinatorId { get; set; }
+        public User Coordinator { get; set; }
         public string Organization { get; set; }
 
         public List<EventVolunteer> EventVolunteers { get; set; }
