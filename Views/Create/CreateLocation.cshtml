@@ -24,59 +24,89 @@
                 </div>
             </div>
 
-            <script>
-                var map, infoWindow;
+            <div id="infowindow-content" class="d-none">
+                <form id='map-form'>
+                    Address/Postcode: <input id='map-from-address' type='text' />
+                    <input type='submit' id='map-go' value='Go' />
+                </form>
+            </div>
 
+            <script>
+                var map;
+                var markers = [];
+                var infowindow;
+                
                 function initMap() {
                     map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: 16,
                         center: {lat: -34.397, lng: 150.644},
-                        zoom: 10
+                        disableDefaultUI: true,
+                        zoomControl: true
                     });
-                    
-                    infoWindow = new google.maps.InfoWindow;
+                    var geocoder = new google.maps.Geocoder();
+
+                    geocodeAddress(geocoder, map);
+
+                    infowindow = new google.maps.InfoWindow();
 
                     map.addListener('click', function(e) {
-                        placeMarkerAndPanTo(e.latLng, map);
+                        addMarker(e.latLng);
                     });
-
-                    if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(function(position) {
-                            var pos = {
-                                lat: position.coords.latitude,
-                                lng: position.coords.longitude
-                            };
-
-                            // infoWindow.setPosition(pos);
-                            // infoWindow.setContent('Location found.');
-                            // infoWindow.open(map);
-                            map.setCenter(pos);
-                        }, function() {
-                            handleLocationError(true, infoWindow, map.getCenter());
-                        });
-                    } else {
-                        // Browser doesn't support Geolocation
-                        handleLocationError(false, infoWindow, map.getCenter());
-                    }
                 }
 
-                function placeMarkerAndPanTo(latLng, map) {
-                    alert(latLng)
-                    var marker = new google.maps.Marker({
-                        position: latLng,
+                function geocodeAddress(geocoder, resultsMap) {
+                    geocoder.geocode({'address': "Bellevue Botanical Garden"}, function(results, status) {
+                        if(status === 'OK') {
+                            resultsMap.setCenter(results[0].geometry.location);
+                        } else {
+                            alert('Geocode was not successful for the following reason: ' + status);
+                        }
+                    });
+                }
+
+                function addMarker(position){
+                    markers.push(new google.maps.Marker({
+                        position: position,
+                        map: map,
                         draggable:true,
-                        title:"New Location",
-                        map: map
-                    });
-                    map.panTo(latLng);
+                        animation: google.maps.Animation.DROP
+                    }));
+
+                    for(let i=0; i<markers.length; i++){
+                        let marker = markers[i];
+
+                        console.log(marker)
+                        // google.maps.event.addListener(marker, 'click', setPositionAsContent);
+
+                        //google.maps.event.addListener(marker, "click", function(){
+                        //    infowindow.setContent(this.position.toString());
+                        //    infowindow.open(this.map, this);
+                        //});
+
+                        google.maps.event.addListener(marker, 'click', (function(marker) {
+                            return function() {
+                                infowindow.setContent('<form><input type="text" placeholder="Enter Location Name" /><button type="submit">Add Location</button></form>');
+                                infowindow.open(map, marker);
+                            }
+                        })(marker));
+
+                        google.maps.event.addListener(marker, 'dragend', function() {
+                            console.log(this.position.lat());
+                            console.log(this.position.lng());
+                        })
+                    }
+
                 }
 
-                function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-                    infoWindow.setPosition(pos);
-                    infoWindow.setContent(browserHasGeolocation ?
-                                        'Error: The Geolocation service failed.' :
-                                        'Error: Your browser doesn\'t support geolocation.');
-                    infoWindow.open(map);
+                function setPositionAsContent(marker){
+                    var infowindow = new google.maps.InfoWindow(
+                    {
+                        content: "<div class=infowindow><h1>Bradford</h1><p>Population: 467,665</p></div>"
+                    });
+                    
+                    infowindow.open(map, marker);
                 }
+
             </script>
             <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcFLcB_cuAHwGsWGlwHnYSY9VQcz3ioLc&callback=initMap"></script>
         </form>
