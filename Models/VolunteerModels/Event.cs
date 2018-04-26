@@ -19,11 +19,14 @@ namespace VolunteerPlanner.Models
         public List<EventVolunteer> EventVolunteers { get; set; }
 
         public List<Location> Locations { get; set; }
+        public List<TaskInfo> Tasks { get; set; }
+
  
         public Event()
         {
             EventVolunteers = new List<EventVolunteer>();
             Locations = new List<Location>();
+            Tasks = new List<TaskInfo>();
         }
     }
 }

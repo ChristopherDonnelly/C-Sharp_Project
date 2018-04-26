@@ -20,7 +20,8 @@ namespace VolunteerPlanner.Models
         public int EventId { get; set; }
         public Event Event { get; set; }
 
-        [ForeignKey("Location")]
+        [ForeignKey("LocationId")]
+        public int LocationId { get; set; }
         public Location Loc { get; set; }
 
         public List<TaskVolunteer> TaskVolunteers { get; set; }
