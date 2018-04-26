@@ -1,0 +1,40 @@
+<br>
+<div class="row">
+  <div class="col-sm-3 border border-primary rounded p-3 mb-2 bg-primary text-white" style="height: 300px; margin-right: 7%;">
+      <h3 style="text-align: center;">Event Title</h3>
+      <p style="text-align: center;">Description of event goes here</p>
+  </div>
+  <div class="col-sm-3 border border-primary rounded p-3 mb-2 bg-primary text-white" style="height: 300px; margin-right: 7%;">
+      <img src="~/images/MapPlaceholder.png" class="img-rounded" alt="Map Location" style="height: 300px; width: 100%; height: 100%;">
+  </div>
+  <div class="col-sm-3 border border-primary rounded p-3 mb-2 bg-primary text-white" style=" min-height: 500px;">
+      <h3 style="text-align: center;">Volunteers</h3>
+      <br>
+      <h5 style="text-align: center; text-decoration: underline;">Unassigned Volunteers</h5>
+      <br>
+      <h5 style="text-align: center; text-decoration: underline;">Assigned Volunteers</h5>
+  </div>
+  <div class="col-sm-6 border border-primary rounded p-3 mb-2 bg-primary text-white" style=" min-height: 500px;">
+      <h3 style="text-align: center;">Task List</h3>
+      <br>
+      <h5 style="text-align: center; text-decoration: underline;">Unassigned Volunteers</h5>
+      <br>
+      <h5 style="text-align: center; text-decoration: underline;">Assigned Volunteers</h5>
+  </div>  
+</div>
+
+            @foreach(var vol in @ViewBag.ConfirmedEvent.EventVolunteers)
+            {
+                <h5>@vol.User.FirstName</h5>
+            }
+
+                @foreach(var tsk in @ViewBag.ConfirmedEvent.Tasks)
+                {
+                    <tr>
+                        <td><a asp-controller="Details" asp-action="TaskDetails" asp-route-TaskId="@tsk.TaskId"> @tsk.Name </a></td>
+                        <td><a asp-controller="Details" asp-action="LocationDetails" asp-route-TaskId="@tsk.TaskId"> @tsk.Loc.Name </a></td>
+                        <td>@tsk.TaskVolunteers.Count</td>
+                        <td>@tsk.StartTime</td>
+                        <td>Volunteer/Unvolunteer</td>
+                    </tr>
+                }
