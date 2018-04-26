@@ -1,4 +1,4 @@
-﻿@model VolunteerPlanner.Models.Location
+﻿@model VolunteerPlanner.Models.LocationsEventBundleModel
 
 @{
     ViewData["Title"] = "Add Location";
@@ -85,7 +85,7 @@
 
                         google.maps.event.addListener(marker, 'click', (function(marker) {
                             return function() {
-                                infowindow.setContent('<form><input type="text" placeholder="Enter Location Name" /><button type="submit">Add Location</button></form>');
+                                infowindow.setContent('<form><input class="form-control form-control-sm" type="text" placeholder="Enter Location Name" /><button class="col btn btn-dark btn-sm mt-2" type="submit">Add Location</button></form>');
                                 infowindow.open(map, marker);
                             }
                         })(marker));

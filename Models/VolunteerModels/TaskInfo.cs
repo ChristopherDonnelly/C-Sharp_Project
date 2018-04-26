@@ -6,7 +6,7 @@ using C_Sharp_Project.Models;
 
 namespace VolunteerPlanner.Models
 {
-    public class Task : BaseEntity
+    public class TaskInfo : BaseEntity
     {
         [Key]
         public int TaskId { get; set;}
@@ -25,7 +25,7 @@ namespace VolunteerPlanner.Models
 
         public List<TaskVolunteer> TaskVolunteers { get; set; }
  
-        public Task()
+        public TaskInfo()
         {
             TaskVolunteers = new List<TaskVolunteer>();
         }
