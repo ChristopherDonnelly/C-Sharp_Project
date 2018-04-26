@@ -9,27 +9,34 @@
     {
         <div class="card">
             <div class="card-header">
-                <a class="close" aria-label="Close" asp-controller="Home" asp-action="DeleteEvent" asp-route-eventId="@e.EventId">
-                <span aria-hidden="true">&times;</span>
-                </a>
-                <a href="">@e.Name</a>
+                @if(e.CoordinatorId == (int)ViewData["UserId"]) 
+                {
+                    <a class="close" aria-label="Close" asp-controller="Home" asp-action="DeleteEvent" asp-route-eventId="@e.EventId">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                }
+                <a asp-controller="Details" asp-action="Dashboard" asp-route-id="@e.EventId">@e.Name</a>
             </div>
-            <div class="card-body">@e.Description</div> 
+            <div class="card-body">
+                <p>@e.Description</p>
+                <p>@e.StartDate (@e.GetDuration(@e.StartDate, @e.EndDate))</p>
+            </div> 
             <div class="card-footer">
                 <a asp-controller="Home" asp-action="JoinLeave" asp-route-eventId="@e.EventId" asp-route-location="AllEvents">
-                    @{
-                        if(@e.HasJoined( (int) @ViewData["UserId"] ))
-                        {
-                            <span>Leave</span>
-                        } else {
-                            <span>Join</span>
-                        }
+                    @if(@e.HasJoined( (int) @ViewData["UserId"] ))
+                    {
+                        <span>Leave</span>
+                    } else {
+                        <span>Join</span>
+                    }
+                    @if(e.CoordinatorId == (int)ViewData["UserId"]) 
+                    {
+                        <span>| <a asp-controller="Create" asp-action="CreateLocation" asp-route-EventId="@e.EventId">Add Location</a></span>
                     }
                 </a>
             </div>
         </div>
     }
 </div>
-
 
 
