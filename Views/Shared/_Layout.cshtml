@@ -22,9 +22,7 @@
     <div class="header">
         <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
             @{
-                if(@ViewData["Title"]=="Bright Ideas"){
-                    <a class="navbar-brand" href="/bright_ideas">Hi @ViewData["Username"]!</a>
-                }
+                <a class="navbar-brand" href="/Home">Volunteer Organizer</a>
             }
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -35,13 +33,13 @@
                     @{ 
                         if(@ViewData["Title"]=="Login/Registration"){
                             
-                        }else if(@ViewData["Title"]=="Bright Ideas"){
+                        }else if(@ViewData["Title"]=="Home"){
                             <li class="nav-item">
                                 <a class="nav-link" href="/Logoff">Logout</a>
                             </li>
                         }else{
                             <li class="nav-item">
-                                <a class="nav-link" href="/bright_ideas">Bright Ideas</a>
+                                <a class="nav-link" href="/Home">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/Logoff">Logout</a>

@@ -19,8 +19,8 @@ namespace C_Sharp_Project.Controllers
         public UserController(VolunteerContext context)
         {
             _context = context;
-            _controller = "Home";
-            _action = "Home";
+            _controller = "Create";
+            _action = "CreateLocation";
         }
 
         [HttpGet]

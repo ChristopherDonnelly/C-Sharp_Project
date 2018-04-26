@@ -50,6 +50,9 @@ namespace C_Sharp_Project
                 routes.MapRoute(
                     name: "home",
                     template: "{controller=Home}/{action=Home}/{id?}");
+                routes.MapRoute(
+                    name: "create",
+                    template: "{controller=Create}/{action=Home}/{id?}");
             });
         }
     }
