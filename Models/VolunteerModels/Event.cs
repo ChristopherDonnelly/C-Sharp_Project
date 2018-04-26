@@ -14,6 +14,7 @@ namespace VolunteerPlanner.Models
         public DateTime EndDate { get; set; }
         public string Address { get; set; }
         public int CoordinatorId { get; set; }
+        public User Coordinator { get; set; }
         public string Organization { get; set; }
 
         public List<EventVolunteer> EventVolunteers { get; set; }
@@ -28,5 +29,19 @@ namespace VolunteerPlanner.Models
             Locations = new List<Location>();
             Tasks = new List<TaskInfo>();
         }
+
+        public bool HasJoined(int userId)
+        {
+            bool joined = false;
+            foreach(EventVolunteer user in EventVolunteers)
+            {
+                if(user.User.UserId == userId)
+                {
+                    joined = true;
+                }
+            }
+            return joined;
+        }
+        
     }
 }
