@@ -18,10 +18,10 @@ namespace VolunteerPlanner.Models
         [MinLength(2, ErrorMessage = "Location Name must contain at least 2 characters!")]
         public string Name { get; set; }
 
-        // [Display(Name = "Latitude: ")]
-        // public string Lat { get; set; }
+        [Display(Name = "Latitude: ")]
+        public double Lat { get; set; }
 
-        // [Display(Name = "Longitude: ")]
-        // public string Long { get; set; }
+        [Display(Name = "Longitude: ")]
+        public double Lng { get; set; }
     }
 }

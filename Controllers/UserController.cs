@@ -54,7 +54,7 @@ namespace C_Sharp_Project.Controllers
             if(ModelState.IsValid)
             {
                 saveSession(user);
-                return RedirectToAction(_action, _controller);
+                return RedirectToAction(_action, _controller, new{ EventId = 1 });
             }
 
             return View("LogReg", new LogRegBundleModel{ Login = model });

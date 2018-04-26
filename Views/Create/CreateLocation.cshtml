@@ -1,114 +1,154 @@
 ﻿@model VolunteerPlanner.Models.LocationsEventBundleModel
 
 @{
-    ViewData["Title"] = "Add Location";
+    ViewData["Title"] = "Add Locations";
 }
 
 <div class="row">
     <div class="col-12 mx-auto mt-5">
-        <form asp-controller="Create" asp-action="AddLocation" method="post" class="form-control">
-            <h2 class="text-center">@ViewData["Title"]</h2>
-            <div class="col-5 d-inline-block align-top px-0">
-                <div class="col-12 d-inline-block p-0 align-text-top my-2">
-                    <label asp-for="Name" class="d-inline-block col-3 p-0 text-right"></label>
-                    <input asp-for="Name" class="form-control d-inline-block col-8 m-auto" placeholder="Enter Location Name" aria-label="Enter Location Name" />
-                    <span asp-validation-for="Name" class="d-block pl-3 offset-3 text-danger"></span>
-                </div>
-                <div class="col-12 d-inline-block p-0 align-text-top my-2 text-right pr-5">
-                    <button class="btn btn-dark" type="submit">Add Location</button>
-                </div>
-            </div>
-            <div class="col-6 d-inline-block align-top px-0">
-                <div id="map" class="intrinsic-container intrinsic-container-16x9">
-
-                </div>
-            </div>
-
-            <div id="infowindow-content" class="d-none">
-                <form id='map-form'>
-                    Address/Postcode: <input id='map-from-address' type='text' />
-                    <input type='submit' id='map-go' value='Go' />
-                </form>
-            </div>
-
-            <script>
-                var map;
-                var markers = [];
-                var infowindow;
-                
-                function initMap() {
-                    map = new google.maps.Map(document.getElementById('map'), {
-                        zoom: 16,
-                        center: {lat: -34.397, lng: 150.644},
-                        disableDefaultUI: true,
-                        zoomControl: true
-                    });
-                    var geocoder = new google.maps.Geocoder();
-
-                    geocodeAddress(geocoder, map);
-
-                    infowindow = new google.maps.InfoWindow();
-
-                    map.addListener('click', function(e) {
-                        addMarker(e.latLng);
-                    });
-                }
-
-                function geocodeAddress(geocoder, resultsMap) {
-                    geocoder.geocode({'address': "Bellevue Botanical Garden"}, function(results, status) {
-                        if(status === 'OK') {
-                            resultsMap.setCenter(results[0].geometry.location);
-                        } else {
-                            alert('Geocode was not successful for the following reason: ' + status);
-                        }
-                    });
-                }
-
-                function addMarker(position){
-                    markers.push(new google.maps.Marker({
-                        position: position,
-                        map: map,
-                        draggable:true,
-                        animation: google.maps.Animation.DROP
-                    }));
-
-                    for(let i=0; i<markers.length; i++){
-                        let marker = markers[i];
-
-                        console.log(marker)
-                        // google.maps.event.addListener(marker, 'click', setPositionAsContent);
-
-                        //google.maps.event.addListener(marker, "click", function(){
-                        //    infowindow.setContent(this.position.toString());
-                        //    infowindow.open(this.map, this);
-                        //});
-
-                        google.maps.event.addListener(marker, 'click', (function(marker) {
-                            return function() {
-                                infowindow.setContent('<form><input class="form-control form-control-sm" type="text" placeholder="Enter Location Name" /><button class="col btn btn-dark btn-sm mt-2" type="submit">Add Location</button></form>');
-                                infowindow.open(map, marker);
+        <h2 class="text-center">@ViewData["Title"]</h2>
+        <div class="row mt-5">
+            <div class="col-lg-6 col-md-12 pb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>@Model.Event.Name</h4>
+                    </div>
+                    <div class="card-body">
+                        <h5>Locations:</h5>
+                        @{
+                            foreach (var location in @Model.Locations)
+                            {
+                                <p class="pl-4">@location.Name</p>
                             }
-                        })(marker));
+                        }
+                    </div>
+                    <div class="card-footer text-muted">
+                        <p class="mb-0">@@@Model.Event.Address</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 pb-4 order-lg-last order-md-first order-sm-first order-xs-first">
+                <div id="map" class="intrinsic-container intrinsic-container-16x9 card">
 
-                        google.maps.event.addListener(marker, 'dragend', function() {
-                            console.log(this.position.lat());
-                            console.log(this.position.lng());
-                        })
+                </div>
+            </div>
+        </div>
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/jquery/dist/jquery-ui.min.js"></script>
+        <script>
+            var map;
+            var locations = [];
+            var markers = [];
+            var infowindow;
+
+            @foreach(var location in @Model.Locations)
+            {
+                @:locations.push(['@location.LocationId', '@location.Name', '@location.Lat', '@location.Lng']);
+            }
+
+            console.log(locations.toString());
+            
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 16,
+                    center: {lat: -34.397, lng: 150.644},
+                    disableDefaultUI: true,
+                    zoomControl: true
+                });
+                var geocoder = new google.maps.Geocoder();
+
+                geocodeAddress(geocoder, map);
+
+                infowindow = new google.maps.InfoWindow();
+
+                for(let count=0; count<locations.length; count++){
+                    console.log('Id: '+locations[count][0])
+                    console.log('Name: '+locations[count][1])
+                    console.log('Lat: '+locations[count][2])
+                    console.log('Lng: '+locations[count][3])
+                    addMarker(new google.maps.LatLng(locations[count][2], locations[count][3]), locations[count][0], locations[count][1]);
+                }
+
+                map.addListener('click', function(e) {
+                    addMarker(e.latLng);
+                });
+
+            }
+
+            function geocodeAddress(geocoder, resultsMap) {
+                geocoder.geocode({'address': '@Model.Event.Address'}, function(results, status) {
+                    if(status === 'OK') {
+                        resultsMap.setCenter(results[0].geometry.location);
+                    } else {
+                        alert('Geocode was not successful for the following reason: ' + status);
                     }
+                });
+            }
 
+            function addMarker(position, id, name){
+                markers.push(new google.maps.Marker({
+                    position: position,
+                    map: map,
+                    draggable:true,
+                    animation: google.maps.Animation.DROP,
+                    id: id,
+                    title: name
+                }));
+
+                for(let i=0; i<markers.length; i++){
+                    let marker = markers[i];
+
+                    google.maps.event.addListener(marker, 'click', (function(marker) {
+                        return function() {
+                            if(typeof(marker.title) != 'undefined'){
+                                infowindow.setContent('<strong>'+marker.title+'</strong><br><form><input type="hidden" name="EventId" value="@Model.Event.EventId" /><input type="hidden" name="LocationId" value="'+marker.id+'" /><button class="col btn btn-dark btn-sm mt-2" type="submit">Remove Location</button></form>');
+                            }else{
+                                infowindow.setContent('<form class="addLocation" action="addLocation" method="post"><input type="hidden" name="EventId" value="@Model.Event.EventId" /><input class="form-control form-control-sm" type="text" name="Name" placeholder="Enter Location Name" /><button class="col btn btn-dark btn-sm mt-2" type="submit">Add Location</button></form>');
+                            }
+                            infowindow.open(map, marker);
+  
+                            $('.addLocation').submit(function( event ) {
+                                event.preventDefault();
+
+                                $('.card-body').append('<p class="pl-4">' + marker.title + '</p>');
+
+                                $.ajax({
+                                    headers: { 
+                                        'Accept': 'application/json',
+                                        'Content-Type': 'application/json' 
+                                    },
+                                    type: "POST",
+                                    url: "/AddLocation",
+                                    data: JSON.stringify({
+                                        "EventId": this.EventId.value, 
+                                        "Name": this.Name.value,
+                                        "Lat": marker.position.lat(),
+                                        "Lng": marker.position.lng()
+                                    }),
+                                    dataType: 'json',
+                                    success: function(response){
+
+                                        console.log(response)
+
+                                        marker.title = this.Name.value;
+                                        infowindow.setContent('<strong>'+marker.title+'</strong><br><form><button class="col btn btn-dark btn-sm mt-2" type="submit">Remove Location</button></form>');
+                                        infowindow.close(map, marker);
+                                    }
+                                });
+                            });
+                        }
+                    })(marker));
+
+                    google.maps.event.addListener(marker, 'dragend', function() {
+                        console.log(this.position.lat());
+                        console.log(this.position.lng());
+                    })
                 }
 
-                function setPositionAsContent(marker){
-                    var infowindow = new google.maps.InfoWindow(
-                    {
-                        content: "<div class=infowindow><h1>Bradford</h1><p>Population: 467,665</p></div>"
-                    });
-                    
-                    infowindow.open(map, marker);
-                }
+            }
 
-            </script>
-            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcFLcB_cuAHwGsWGlwHnYSY9VQcz3ioLc&callback=initMap"></script>
-        </form>
+        </script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcFLcB_cuAHwGsWGlwHnYSY9VQcz3ioLc&callback=initMap"></script>
+
     </div>
 </div>
