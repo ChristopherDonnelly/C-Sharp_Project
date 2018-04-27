@@ -1,8 +1,7 @@
 @model VolunteerPlanner.Models.Event
+<link rel="stylesheet" href="~/css/eventStyle.css" />
 
 <div class="header">
-    <a asp-controller="Events" asp-action="Home">Home</a>
-    <a asp-controller="User" asp-action="Logoff">Log Out</a>
     <h1>Add an Event</h1>
 </div>
 <form asp-controller="Home" asp-action="CreateEvent" method="POST" class="form-control">
@@ -42,7 +41,7 @@
     </div>
 
     <div class="col-12 text-right pr-5">
-        <button type="submit" class="btn btn-dark">Add Event</button>
+        <button type="submit" class="btn btn-dark newEvent addEvent">Add Event</button>
     </div>
 
 </form>

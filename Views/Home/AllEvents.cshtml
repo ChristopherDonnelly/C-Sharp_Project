@@ -1,42 +1,44 @@
 @model List<VolunteerPlanner.Models.Event>
 <link rel="stylesheet" href="~/css/eventStyle.css" />
-<h3>Welcome, @ViewData["Username"]</h3>
 
-<div class="allEventsContainer">
+<div class="allEventsContainer mt-5">
     <h1>All Events</h1>
-    <a asp-controller="Home" asp-action="New">New Event</a>
-    @foreach(var e in @Model)
-    {
-        <div class="card">
-            <div class="card-header">
-                @if(e.CoordinatorId == (int)ViewData["UserId"]) 
-                {
-                    <a class="close" aria-label="Close" asp-controller="Home" asp-action="DeleteEvent" asp-route-eventId="@e.EventId">
-                        <span aria-hidden="true">&times;</span>
-                    </a>
-                }
-                <a asp-controller="Details" asp-action="Dashboard" asp-route-id="@e.EventId">@e.Name</a>
-            </div>
-            <div class="card-body">
-                <p>@e.Description</p>
-                <p>@e.StartDate (@e.GetDuration(@e.StartDate, @e.EndDate))</p>
-            </div> 
-            <div class="card-footer">
-                <a asp-controller="Home" asp-action="JoinLeave" asp-route-eventId="@e.EventId" asp-route-location="AllEvents">
-                    @if(@e.HasJoined( (int) @ViewData["UserId"] ))
-                    {
-                        <span>Leave</span>
-                    } else {
-                        <span>Join</span>
-                    }
-                    @if(e.CoordinatorId == (int)ViewData["UserId"]) 
-                    {
-                        <span>| <a asp-controller="Create" asp-action="CreateLocation" asp-route-EventId="@e.EventId">Add Location</a></span>
-                    }
-                </a>
-            </div>
-        </div>
-    }
+    <a class="newEvent" asp-controller="Home" asp-action="New">New Event</a>
+    <div class="row cardContainer">
+        @foreach(var e in @Model)
+        {
+            <div class="card border-success mb-3" style="max-width: 20rem;">
+                    <div class="card-header">
+                        <a asp-controller="Home" asp-action="JoinLeave" asp-route-eventId="@e.EventId" asp-route-location="AllEvents">
+                            @if(@e.HasJoined( (int) @ViewData["UserId"] ))
+                            {
+                                <span>Leave</span>
+                            } else {
+                                <span>Join</span>
+                            }
+                            @if(e.CoordinatorId == (int)ViewData["UserId"]) 
+                            {
+                                <span>| <a asp-controller="Create" asp-action="CreateLocation" asp-route-EventId="@e.EventId">Add Location</a></span>
+                            }
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            @if(e.CoordinatorId == (int)ViewData["UserId"]) 
+                                {
+                                    <a class="close" aria-label="Close" asp-controller="Home" asp-action="DeleteEvent" asp-route-eventId="@e.EventId">
+                                        <span aria-hidden="true">&times;</span>
+                                    </a>
+                                }
+                            <a asp-controller="Details" asp-action="Dashboard" asp-route-id="@e.EventId">@e.Name</a>
+                        </h4>
+                        <div class="card-text">
+                            <p class="description">@e.Description</p>
+                                    <p>@e.StartDate.ToString("M/dd/yyy H:mm tt")</p>
+                                    <p>(@e.GetDuration(@e.StartDate, @e.EndDate).ToString(@"hh\:mm"))</p>
+                        </div>
+                    </div>
+                </div>
+        }
+    </div>
 </div>
-
-

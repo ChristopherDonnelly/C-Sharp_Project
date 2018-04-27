@@ -32,7 +32,7 @@ namespace C_Sharp_Project.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
  
-        [Display(Name = "Passwrod Confirm: ")]
+        [Display(Name = "Password Confirm: ")]
         [Compare("Password", ErrorMessage = "Password and confirmation must match.")]
         public string PasswordConfirmation { get; set; }
 

@@ -9,13 +9,17 @@
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/eventStyle.css">
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/4.0.0/css/bootstrap.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
+        <link rel="stylesheet" href="~/css/eventStyle.css">
     </environment>
 </head>
 <body>
@@ -38,6 +42,9 @@
                                 <a class="nav-link" href="/Logoff">Logout</a>
                             </li>
                         }else{
+				<li class="nav-item">
+                                <a class="nav-link disabled text-white"" href="#">Welcome, @ViewData["Username"]</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/AllEvents">Home</a>
                             </li>
