@@ -109,6 +109,8 @@
   
                             $('.addLocation').submit(function( event ) {
                                 event.preventDefault();
+                                
+                                marker.title = this.Name.value;
 
                                 $('.card-body').append('<p class="pl-4">' + marker.title + '</p>');
 
@@ -127,11 +129,9 @@
                                     }),
                                     dataType: 'json',
                                     success: function(response){
+                                        marker.id = response.locationId;
 
-                                        console.log(response)
-
-                                        marker.title = this.Name.value;
-                                        infowindow.setContent('<strong>'+marker.title+'</strong><br><form><button class="col btn btn-dark btn-sm mt-2" type="submit">Remove Location</button></form>');
+                                        infowindow.setContent('<strong>'+marker.title+'</strong><br><form><input type="hidden" name="EventId" value="'+response.eventId+'" /><input type="hidden" name="LocationId" value="'+marker.id+'" /><button class="col btn btn-dark btn-sm mt-2" type="submit">Remove Location</button></form>');
                                         infowindow.close(map, marker);
                                     }
                                 });
@@ -142,9 +142,26 @@
                     google.maps.event.addListener(marker, 'dragend', function() {
                         console.log(this.position.lat());
                         console.log(this.position.lng());
-                    })
-                }
 
+                        $.ajax({
+                            headers: { 
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json' 
+                            },
+                            type: "PUT",
+                            url: "/UpdateLocation",
+                            data: JSON.stringify({
+                                "LocationId": this.id,
+                                "Lat": this.position.lat(),
+                                "Lng": this.position.lng()
+                            }),
+                            dataType: 'json',
+                            success: function(response){
+                                
+                            }
+                        });
+                    });
+                }
             }
 
         </script>

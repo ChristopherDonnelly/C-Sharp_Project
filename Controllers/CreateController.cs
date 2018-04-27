@@ -44,13 +44,24 @@ namespace C_Sharp_Project.Controllers
         [Route("AddLocation")]
         public JsonResult AddLocation([FromBody] Location location)
         {
+            _context.locations.Add(location);
+            _context.SaveChanges();
 
-            Console.WriteLine(location.EventId);
-            Console.WriteLine(location.Name);
-            Console.WriteLine(location.Lat);
-            Console.WriteLine(location.Lng);
+            return Json(new{ EventId = location.EventId, LocationId = location.LocationId });
+        }
 
-            return Json(new{ success = true});
+        [HttpPut]
+        [Route("UpdateLocation")]
+        public JsonResult UpdateLocation([FromBody] Location location)
+        {
+            Console.WriteLine("Location Id: "+ location.LocationId);
+            Console.WriteLine("Location Lat: "+ location.Lat);
+            Console.WriteLine("Location Lng: "+ location.Lng);
+            Location dbLocation = _context.locations.SingleOrDefault(l => l.LocationId == location.LocationId);
+            dbLocation = location;
+            _context.SaveChanges();
+
+            return Json(new{ Success = true });
         }
 
         private void setSessionViewData()
