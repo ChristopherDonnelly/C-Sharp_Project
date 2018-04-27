@@ -148,7 +148,7 @@ namespace C_Sharp_Project.Controllers
             return RedirectToAction(_action, _controller);
         }
 
-        private void setSessionViewData()
+        public void setSessionViewData()
         {
             ViewData["Username"] = HttpContext.Session.GetString("UserName");
             ViewData["UserId"] = (int)HttpContext.Session.GetInt32("UserId");

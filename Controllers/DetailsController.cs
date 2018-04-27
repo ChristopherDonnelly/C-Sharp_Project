@@ -40,34 +40,40 @@ namespace C_Sharp_Project.Controllers
             }
         }
 
-
-
         [HttpGet]
-        [Route("DeleteEvent/{EventId}")]
-        public IActionResult DeleteEvent(int EventId){
-            if(isLoggedIn()){
-                setSessionViewData();
-
-                // Ideas idea = _context.ideas.SingleOrDefault(u => u.IdeaId == IdeaId);
-
-                // if(idea != null){
-                //     if(idea.IdeaCreatorId == (int)ViewData["UserId"]){
-                //         _context.ideas.Remove(idea);   
-                //         _context.SaveChanges();
-                //     }
-                // }
-
-                return RedirectToAction("Home");
-            }else{
-                return RedirectToAction(_action, _controller);
-            }
+        [Route("JoinTask/{TaskId}/{EventId}")]
+        public IActionResult JoinTask(int TaskId, int EventId)
+        {
+            User ConfirmedUser = GetUserInfo();
+            TaskVolunteer NewTaskVol = new TaskVolunteer
+            {
+                UserId = ConfirmedUser.UserId,
+                TaskId = TaskId
+            };
+            _context.task_volunteers.Add(NewTaskVol);
+            _context.SaveChanges();
+            return RedirectToAction("Dashboard", new { id = EventId });
         }
 
-
-        private void setSessionViewData()
+        [HttpGet]
+        [Route("LeaveTask/{TaskId}/{EventId}")]
+        public IActionResult LeaveTask(int TaskId, int EventId)
         {
-            ViewData["Username"] = HttpContext.Session.GetString("UserName");
-            ViewData["UserId"] = (int)HttpContext.Session.GetInt32("UserId");
+            User ConfirmedUser = GetUserInfo();
+            TaskVolunteer RetrievedTaskVol = _context.task_volunteers.SingleOrDefault(Task => Task.TaskId == TaskId && ConfirmedUser.UserId == Task.UserId);
+            _context.task_volunteers.Remove(RetrievedTaskVol);
+            _context.SaveChanges();
+            return RedirectToAction("Dashboard", new { id = EventId } );
+        }
+
+        [HttpGet]
+        [Route("DeleteTask/{TaskId}/{EventId}")]
+        public IActionResult DeleteTask(int TaskId, int EventId)
+        {
+            TaskInfo RetrievedTask = _context.tasks.SingleOrDefault(Task => Task.TaskId == TaskId);
+            _context.tasks.Remove(RetrievedTask);
+            _context.SaveChanges();            
+            return RedirectToAction("Dashboard", new { id = EventId });
         }
 
         public bool isLoggedIn(){
@@ -88,7 +94,11 @@ namespace C_Sharp_Project.Controllers
             ViewBag.ConfirmedEvent = ConfirmedEvent;
             return ConfirmedEvent;
         }
-
+        public void setSessionViewData()
+        {
+            ViewData["Username"] = HttpContext.Session.GetString("UserName");
+            ViewData["UserId"] = (int)HttpContext.Session.GetInt32("UserId");
+        }
         public List<User> AssignedVolunteerInfo(int Id)
         {
             Event ConfirmedEvent = GetEventInfo(Id);

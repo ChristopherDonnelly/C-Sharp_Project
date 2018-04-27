@@ -45,7 +45,30 @@
                         <td>@tsk.Loc.Name </td>
                         <td>@tsk.TaskVolunteers.Count of @tsk.Capacity</td>
                         <td>@tsk.StartTime.ToString("MMMM dd @ hh:mm tt")</td>
-                        <td>Vol/Unvol</td>
+                        
+                        @if(@ViewBag.ConfirmedEvent.CoordinatorId == @ViewBag.ConfirmedUser.UserId)
+                        {
+                            <td><a style="color: white; text-decoration: underline;" asp-controller="Details" asp-action="DeleteTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Delete </a></td>
+                        }
+                        else
+                        {
+                            var tvol = false;
+                            @foreach(var person in @tsk.TaskVolunteers)
+                            {
+                                @if(person.UserId == @ViewBag.ConfirmedUser.UserId)
+                                {
+                                    tvol = true;
+                                }
+                            }
+                            @if(tvol == true)
+                            {
+                                <td><a style="color: white; text-decoration: underline;" asp-controller="Details" asp-action="LeaveTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Leave </a></td>
+                            }
+                            else
+                            {
+                                <td><a style="color: white; text-decoration: underline;" asp-controller="Details" asp-action="JoinTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Join </a></td>
+                            }
+                        }
                     </tr>
                 }
             </tbody>
