@@ -40,30 +40,6 @@ namespace C_Sharp_Project.Controllers
             }
         }
 
-
-
-        [HttpGet]
-        [Route("DeleteEvent/{EventId}")]
-        public IActionResult DeleteEvent(int EventId){
-            if(isLoggedIn()){
-                setSessionViewData();
-
-                // Ideas idea = _context.ideas.SingleOrDefault(u => u.IdeaId == IdeaId);
-
-                // if(idea != null){
-                //     if(idea.IdeaCreatorId == (int)ViewData["UserId"]){
-                //         _context.ideas.Remove(idea);   
-                //         _context.SaveChanges();
-                //     }
-                // }
-
-                return RedirectToAction("Home");
-            }else{
-                return RedirectToAction(_action, _controller);
-            }
-        }
-
-
         private void setSessionViewData()
         {
             ViewData["Username"] = HttpContext.Session.GetString("UserName");
