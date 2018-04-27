@@ -55,10 +55,12 @@ namespace C_Sharp_Project.Controllers
         public JsonResult UpdateLocation([FromBody] Location location)
         {
             Console.WriteLine("Location Id: "+ location.LocationId);
+            Console.WriteLine("Location Name: "+ location.Name);
             Console.WriteLine("Location Lat: "+ location.Lat);
             Console.WriteLine("Location Lng: "+ location.Lng);
 
             Location dbLocation = _context.locations.SingleOrDefault(l => l.LocationId == location.LocationId);
+            if(location.Name != " " && location.Name != "" && !string.IsNullOrEmpty(location.Name)) dbLocation.Name = location.Name;
             dbLocation.Lat = location.Lat;
             dbLocation.Lng = location.Lng;
 

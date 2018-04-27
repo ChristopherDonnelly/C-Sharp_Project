@@ -19,7 +19,9 @@
                             @{
                                 foreach (var location in @Model.Locations)
                                 {
-                                    <p class="pl-4" id="locationId_Title_@location.LocationId">@location.Name</p>
+                                    <p class="pl-4">
+                                        <a href="#" class="show_location" id="locationIdTitle_@location.LocationId">@location.Name</a>
+                                    </p>
                                 }
                             }
                         </div>
@@ -73,7 +75,6 @@
                 map.addListener('click', function(e) {
                     addMarker(e.latLng);
                 });
-
             }
 
             function geocodeAddress(geocoder, resultsMap) {
@@ -87,29 +88,38 @@
             }
 
             function addMarker(position, id, name){
-                markers.push(new google.maps.Marker({
+                let newMarker = new google.maps.Marker({
                     position: position,
                     map: map,
                     draggable:true,
-                    animation: google.maps.Animation.DROP,
                     id: id,
                     title: name
-                }));
+                });
+
+                markers.push(newMarker);
 
                 for(let i=0; i<markers.length; i++){
                     let marker = markers[i];
-                    
+
                     google.maps.event.clearListeners(marker, 'click');
                     google.maps.event.addListener(marker, 'click', (function(marker) {
                         return function() {
                             if(typeof(marker.title) != 'undefined'){
-                                infowindow.setContent('<strong>'+marker.title+'</strong><br><form class="deleteLocation" action="deleteLocation" method="post"><input type="hidden" name="EventId" value="@Model.Event.EventId" /><input type="hidden" name="LocationId" value="'+marker.id+'" /><button class="col btn btn-primary btn-sm mt-2" type="submit">Remove Location</button></form>');
+                                infowindow.setContent('<div class="mx-3"><p class="form-control mb-0 py-1 edit_title" contenteditable="true" id="TitleId_'+marker.id+'">'+marker.title+'</p><form class="deleteLocation" action="deleteLocation" method="post"><input type="hidden" name="EventId" value="@Model.Event.EventId" /><input type="hidden" name="LocationId" value="'+marker.id+'" /><button class="col btn btn-primary btn-sm mt-2" type="submit">Remove Location</button></form></div>');
                             }else{
-                                infowindow.setContent('<form class="addLocation" action="addLocation" method="post"><input type="hidden" name="EventId" value="@Model.Event.EventId" /><input class="form-control form-control-sm" type="text" name="Name" placeholder="Enter Location Name" /><button class="col btn btn-primary btn-sm mt-2" type="submit">Add Location</button></form>');
+                                infowindow.setContent('<form class="addLocation mx-3" action="addLocation" method="post"><input type="hidden" name="EventId" value="@Model.Event.EventId" /><input class="form-control form-control-sm" type="text" name="Name" placeholder="Enter Location Name" /><button class="col btn btn-primary btn-sm mt-2" type="submit">Add Location</button></form>');
                             }
+
+                            google.maps.event.clearListeners(infowindow, 'closeclick');
+                            google.maps.event.addListener(infowindow,'closeclick', (function(currentMark) {
+                                return function() {
+                                    if(typeof(currentMark.title) == 'undefined') currentMark.setMap(null);
+                                }
+                            })(marker));
+
                             infowindow.open(map, marker);
 
-                            addDeleteFunctions();
+                            addLocationFunctions();
   
                             $('.addLocation').off('submit').on('submit', function( event ) {
                                 event.preventDefault();
@@ -133,12 +143,12 @@
                                     success: function(response){
                                         marker.id = response.locationId;
 
-                                        infowindow.setContent('<strong>'+marker.title+'</strong><br><form class="deleteLocation" action="deleteLocation" method="post"><input type="hidden" name="EventId" value="'+response.eventId+'" /><input type="hidden" name="LocationId" value="'+marker.id+'" /><button class="col btn btn-primary btn-sm mt-2" type="submit">Remove Location</button></form>');
+                                        infowindow.setContent('<div class="mx-3"><p class="form-control mb-0 py-1 edit_title" contenteditable="true" id="TitleId_'+marker.id+'">'+marker.title+'</p><form class="deleteLocation" action="deleteLocation" method="post"><input type="hidden" name="EventId" value="'+response.eventId+'" /><input type="hidden" name="LocationId" value="'+marker.id+'" /><button class="col btn btn-primary btn-sm mt-2" type="submit">Remove Location</button></form></div>');
                                         infowindow.close(map, marker);
 
-                                        $('.card-body').append('<p id="locationId_Title_'+marker.id+'" class="pl-4">' + marker.title + '</p>');
+                                        $('.card-body').append('<p class="pl-4"><a href="#" class="show_location" id="locationIdTitle_'+marker.id+'">' + marker.title + '</a></p>');
 
-                                        addDeleteFunctions();
+                                        addLocationFunctions();
                                     }
                                 });
                             });
@@ -165,22 +175,107 @@
                             }
                         });
                     });
+
+                    addLocationFunctions();
                 }
 
-                function addDeleteFunctions(){
-                    $('.deleteLocation').off('submit').on('submit', function( event ) {
-                        event.preventDefault();
-                        let id = this.LocationId.value - 1;
-                        console.log("Location Id: " + this.LocationId.value);
-                        console.log("Marker Location Id: " + markers[this.LocationId.value - 1].id)
-                        console.log("Marker Location Title: " + markers[this.LocationId.value - 1].title)
+                if(typeof(name) == 'undefined') new google.maps.event.trigger( newMarker, 'click' );
+            }
 
-                        marker = markers[id];
-                        $("#locationId_Title_"+marker.id).remove();
-                        marker.setMap(null);
+            function addLocationFunctions(){
+                $('.show_location').off("mouseenter").on("mouseenter", startMarker).off("mouseleave").on("mouseleave", stopMarker).off("click").on("click", locationTextClick);
+
+                $('.edit_title').off("click").on("click", selectText).on( "keydown", setTitle );
+
+                $('.deleteLocation').off('submit').on('submit', function( event ) {
+                    event.preventDefault();
+                    let id = this.LocationId.value;
+                    
+                    let marker = getMarkerById(id);
+
+                    $.ajax({
+                        headers: { 
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json' 
+                        },
+                        type: "DELETE",
+                        url: "/DeleteLocation",
+                        data: JSON.stringify({
+                            "LocationId": marker.id
+                        }),
+                        dataType: 'json',
+                        success: function(response){
+                            $("#locationIdTitle_"+marker.id).remove();
+                            marker.setMap(null);
+                        }
+                    });
+                });
+            }
+
+            function setTitle(event){
+                if(event.keyCode == 13){
+                    let $this = $(event.target);
+                    let index = $this.attr('id').split("_")[1];
+                    let marker = getMarkerById(index);
+                    marker.title = $this.text();
+                    $.ajax({
+                        headers: { 
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json' 
+                        },
+                        type: "PUT",
+                        url: "/UpdateLocation",
+                        data: JSON.stringify({
+                            "LocationId": marker.id,
+                            "Lat": marker.position.lat(),
+                            "Lng": marker.position.lng(),
+                            "Name": marker.title
+                        }),
+                        dataType: 'json',
+                        success: function(response){
+                            $('#locationIdTitle_'+marker.id).html(marker.title);
+                            new google.maps.event.trigger( infowindow, 'closeclick' );
+                        }
                     });
                 }
             }
+
+            function selectText(event){
+                let selection = window.getSelection();
+                let range = document.createRange();
+                range.selectNodeContents(event.target);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            }
+
+            function startMarker(event){
+                let index = $(event.target).attr('id').split("_")[1];
+                let marker = getMarkerById(index);
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+            }
+
+            function stopMarker(event){
+                let index = $(event.target).attr('id').split("_")[1];
+                let marker = getMarkerById(index);
+                marker.setAnimation(null);
+            }
+
+            function locationTextClick(event){
+                let index = $(event.target).attr('id').split("_")[1];
+                let marker = getMarkerById(index);
+                new google.maps.event.trigger( marker, 'click' );
+            }
+
+            function getMarkerById(id){
+                for(let i=0; i<markers.length; i++){
+                    if(markers[i].id == id){
+                        marker = markers[i];
+                        break;
+                    }
+                }
+                return marker;
+            }
+
 
         </script>
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcFLcB_cuAHwGsWGlwHnYSY9VQcz3ioLc&callback=initMap"></script>
