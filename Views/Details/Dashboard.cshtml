@@ -77,9 +77,12 @@
             <div id="bg-secondary" class="col-12 p-3 bg-primary bg-secondary" style="height: 300px;">
                 <h3 style="text-align: center;">Unassigned Volunteers</h3>
                 <hr>
-                @foreach(var person in @ViewBag.UnassignedVolunteers)
+                @if(@ViewBag.UnassignedVolunteers.Count > 0)
                 {
-                    <h5 class="darkerGreen">@person.FirstName</h5>
+                    @foreach(var person in @ViewBag.UnassignedVolunteers)
+                    {
+                        <h5 class="darkerGreen">@person.FirstName</h5>
+                    }
                 }
             </div>
         </div>
@@ -87,9 +90,16 @@
             <div class="col-12 p-3 mb-2 bg-primary bg-secondary" style="height: 300px;">
                 <h3 style="text-align: center;">Assigned Volunteers</h3>
                 <hr>
-                @foreach(var person in @ViewBag.AssignedVolunteers)
+                @if(@ViewBag.AssignedVolunteers.Count > 0)
                 {
-                    <h5>@person.FirstName</h5>
+                    @foreach(var person in @ViewBag.AssignedVolunteers)
+                    {
+                        @if(person == null)
+                        {
+                            break;
+                        }
+                        <h5>@person.FirstName</h5>
+                    }
                 }
             </div>
         </div>

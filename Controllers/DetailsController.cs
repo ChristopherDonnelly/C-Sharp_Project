@@ -172,12 +172,18 @@ namespace C_Sharp_Project.Controllers
             foreach(var evol in ConfirmedEvent.EventVolunteers)
             {
                 UnassignedVolunteers.Add(evol.User);
-                foreach(var person in AssignedVolunteers)
+                if(AssignedVolunteers.Count > 0)
                 {
-                    System.Console.WriteLine("Assigned User: " + person.FirstName);
-                    if(person.UserId == evol.UserId)
+                    foreach(var person in AssignedVolunteers)
                     {
-                        UnassignedVolunteers.Remove(evol.User);
+                        if(person == null)
+                        {
+                            break;
+                        }
+                        if(person.UserId == evol.UserId)
+                        {
+                            UnassignedVolunteers.Remove(evol.User);
+                        }
                     }
                 }
             }
