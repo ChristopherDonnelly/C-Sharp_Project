@@ -41,6 +41,31 @@ namespace C_Sharp_Project.Controllers
         }
 
         [HttpGet]
+        [Route("TaskDetails/{TaskId}")]
+        public IActionResult TaskDetails(int TaskId, int EventId)
+        {
+            if(isLoggedIn()){
+                setSessionViewData();
+                Event ConfirmedEvent = GetEventInfo(EventId);
+                GetUserInfo();
+                foreach(var tsk in ConfirmedEvent.Tasks)
+                {
+                    if(tsk.TaskId == TaskId)
+                    {
+                        ViewBag.CurrentTask = tsk;
+                        foreach(var dude in tsk.TaskVolunteers)
+                        {
+                            System.Console.WriteLine(dude.User.FirstName);
+                        }
+                    }
+                }
+                return View();
+            }else{
+                return RedirectToAction(_action, _controller);
+            }
+        }
+
+        [HttpGet]
         [Route("NewTask/{id}")]
         public IActionResult NewTask(int id)
         {
