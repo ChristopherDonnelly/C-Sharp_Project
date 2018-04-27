@@ -15,6 +15,14 @@
     font-size: 19px;
     color: rgba(37, 147, 37, 0.87);
 }
+.card {
+    box-shadow: 3px 5px 6px 3px #607d8b87;
+}
+
+.newEvent:hover {
+    text-decoration: none;
+    box-shadow: 1px 1px 6px 3px #cddc39;
+}
 
 .newEvent {
     padding: 10px 24px;
@@ -23,6 +31,7 @@
     font-size: 28px;
     right: 168px;
     position: absolute;
+    box-shadow: 1px 1px 6px 3px #607d8b87;
 }
 
 .allEventsContainer {
