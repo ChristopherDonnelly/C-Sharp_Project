@@ -1,6 +1,11 @@
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
+html, 
+body {
+    height: 100%;
+}
+
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
@@ -44,4 +49,75 @@ td .btn.btn-dark {
 }
 td~td .btn.btn-dark {
     width: 90px;
+}
+.intrinsic-container {
+    position: relative;
+    height: 0;
+    overflow: hidden;
+}
+
+/* 16x9 Aspect Ratio */
+.intrinsic-container-16x9 {
+    padding-bottom: 56.25%;
+}
+
+/* 4x3 Aspect Ratio */
+.intrinsic-container-4x3 {
+    padding-bottom: 75%;
+}
+
+.intrinsic-container iframe {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#locations {
+    overflow-y: auto;
+    height: 305px;
+}
+
+input[type=text], input[type=email], input[type=password] {
+    border: 1px solid rgb(16,15,15,0.24);
+}
+
+p.form-control {
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+
+
+@keyframes example {
+    from {background-color: black;}
+    to {background-color: #b1b1b1;}
+}
+
+/* The element to apply the animation to */
+.btn-primary:hover {
+    background-color: #b1b1b1;
+    animation-name: example;
+    animation-duration: 1s;
+}
+
+@media (min-width: 992px) {
+    #locations {
+        height: 305px;
+    }
+}
+
+@media (min-width: 1200px) {
+    #locations {
+        height: 370px;
+    }    
+}
+
+@media (min-width: 0px) and (max-width: 576px) {
+    .order-xs-first {
+        -webkit-box-ordinal-group: 0;
+        -ms-flex-order: -1;
+        order: -1;
+    }
 }
