@@ -19,6 +19,10 @@
     box-shadow: 3px 5px 6px 3px #607d8b87;
 }
 
+.card:hover {
+    box-shadow: 3px 5px 6px 3px #212121;
+}
+
 .newEvent:hover {
     text-decoration: none;
     box-shadow: 1px 1px 6px 3px #cddc39;
@@ -26,7 +30,7 @@
 
 .newEvent {
     padding: 10px 24px;
-    background-color: #7aae3d;
+    background: linear-gradient(to bottom right, #7aae3d, green);
     color: white;
     font-size: 28px;
     right: 168px;
@@ -37,6 +41,10 @@
 .allEventsContainer {
     position: relative;
 } 
+
+body {
+    background: linear-gradient(to bottom right, white, rgba(114, 110, 110, 0.329));
+}
 .cardContainer {
     margin-top: 10%;
 }
