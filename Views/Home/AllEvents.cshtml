@@ -16,17 +16,17 @@
                             } else {
                                 <span>Join</span>
                             }
-                            @if(e.CoordinatorId == (int)ViewData["UserId"]) 
-                            {
-                                <span>| <a asp-controller="Create" asp-action="CreateLocation" asp-route-EventId="@e.EventId">Add Location</a></span>
-                            }
-                            @if(e.CoordinatorId == (int)ViewData["UserId"]) 
-                            {
-                                <a class="close" aria-label="Close" asp-controller="Home" asp-action="DeleteEvent" asp-route-eventId="@e.EventId">
-                                    <span aria-hidden="true">&times;</span>
-                                </a>
-                            }
                         </a>
+                        @if(e.CoordinatorId == (int)ViewData["UserId"]) 
+                        {
+                            <span>| <a asp-controller="Create" asp-action="CreateLocation" asp-route-EventId="@e.EventId">Add/Edit Locations</a></span>
+                        }
+                        @if(e.CoordinatorId == (int)ViewData["UserId"]) 
+                        {
+                            <a class="close" aria-label="Close" asp-controller="Home" asp-action="DeleteEvent" asp-route-eventId="@e.EventId">
+                                <span aria-hidden="true">&times;</span>
+                            </a>
+                        }
                     </div>
                     <div class="card-body">
                         <h4 class="card-title">

@@ -49,11 +49,23 @@
     margin-top: 2%;
     border-radius: 5px;
 }
+.tableContent {
+    overflow-y: auto;
+    height: 200px;
+}
 
 a.addBtn {
     font-size: 15px;
     padding: 1% 2%;
+}
+
+.eventDetails {
+    background: linear-gradient(to bottom right, rgb(6, 129, 6), rgb(1, 66, 1));
+    font-size: 15px;
     height: 20px;
+    color: white;
+    padding: 1% 2%;
+    
 }
 
 #details input:focus, #details select:focus {
