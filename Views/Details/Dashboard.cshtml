@@ -27,6 +27,7 @@
 
     <div class="col-sm-7 border border-primary rounded p-3 mb-2 bg-primary text-white" style=" min-height: 300px;">
         <h3 style="text-align: center;">Task List</h3>
+        <button><a asp-controller="Details" asp-action="NewTask" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> + Add new</a></button>
         <table class="table table-striped">
             <thead>
             <tr>

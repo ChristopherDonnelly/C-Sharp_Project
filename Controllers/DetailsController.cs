@@ -41,6 +41,41 @@ namespace C_Sharp_Project.Controllers
         }
 
         [HttpGet]
+        [Route("NewTask/{id}")]
+        public IActionResult NewTask(int id)
+        {
+            if(isLoggedIn()){
+                setSessionViewData();
+                GetEventInfo(id);
+                GetUserInfo();
+                return View(new TaskInfo());
+            }else{
+                return RedirectToAction(_action, _controller);
+            }
+        }
+
+        [HttpPost]
+        [Route("NewTask")]
+        public IActionResult NewTask(TaskInfo task, int EventId)
+        {
+            if(isLoggedIn()){
+                setSessionViewData();
+                GetEventInfo(EventId);
+                GetUserInfo();
+                ViewBag.AssignedVolunteers = AssignedVolunteerInfo(EventId);
+                ViewBag.UnassignedVolunteers = UnassignedVolunteerInfo(EventId);
+
+                task.EventId = EventId;
+                _context.tasks.Add(task);
+                _context.SaveChanges();
+
+                return RedirectToAction("Dashboard", "Details", new { id = EventId }); 
+            }else{
+                return RedirectToAction(_action, _controller);
+            }
+        }
+
+        [HttpGet]
         [Route("JoinTask/{TaskId}/{EventId}")]
         public IActionResult JoinTask(int TaskId, int EventId)
         {
