@@ -9,11 +9,11 @@
         <h2 class="text-center">@ViewData["Title"]</h2>
         <div class="row mt-5">
             <div class="col-lg-4 col-md-12 pb-4">
-                <div class="card h-100">
+                <div class="card">
                     <div class="card-header">
                         <h4>@Model.Event.Name</h4>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body pr-0 pb-0">
                         <h5>Locations:</h5>
                         <div id="locations">
                             @{
@@ -146,7 +146,7 @@
                                         infowindow.setContent('<div class="mx-3"><p class="form-control mb-0 py-1 edit_title" contenteditable="true" id="TitleId_'+marker.id+'">'+marker.title+'</p><form class="deleteLocation" action="deleteLocation" method="post"><input type="hidden" name="EventId" value="'+response.eventId+'" /><input type="hidden" name="LocationId" value="'+marker.id+'" /><button class="col btn btn-primary btn-sm mt-2" type="submit">Remove Location</button></form></div>');
                                         infowindow.close(map, marker);
 
-                                        $('.card-body').append('<p class="pl-4"><a href="#" class="show_location" id="locationIdTitle_'+marker.id+'">' + marker.title + '</a></p>');
+                                        $('#locations').append('<p class="pl-4"><a href="#" class="show_location" id="locationIdTitle_'+marker.id+'">' + marker.title + '</a></p>');
 
                                         addLocationFunctions();
                                     }
@@ -214,6 +214,7 @@
 
             function setTitle(event){
                 if(event.keyCode == 13){
+                    event.preventDefault();
                     let $this = $(event.target);
                     let index = $this.attr('id').split("_")[1];
                     let marker = getMarkerById(index);
@@ -234,7 +235,7 @@
                         dataType: 'json',
                         success: function(response){
                             $('#locationIdTitle_'+marker.id).html(marker.title);
-                            new google.maps.event.trigger( infowindow, 'closeclick' );
+                            infowindow.close(map, marker);
                         }
                     });
                 }
@@ -275,8 +276,6 @@
                 }
                 return marker;
             }
-
-
         </script>
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcFLcB_cuAHwGsWGlwHnYSY9VQcz3ioLc&callback=initMap"></script>
 
