@@ -15,7 +15,7 @@
     font-size: 19px;
     color: rgba(37, 147, 37, 0.87);
 }
-.card {
+.card, .bg-secondary {
     box-shadow: 3px 5px 6px 3px #607d8b87;
 }
 
