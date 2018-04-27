@@ -16,11 +16,12 @@
     color: rgba(37, 147, 37, 0.87);
 }
 .card, .bg-secondary {
-    box-shadow: 3px 5px 6px 3px #607d8b87;
+    box-shadow: 3px 5px 6px 3px #293f49;
 }
 
 .card:hover {
     box-shadow: 3px 5px 6px 3px #212121;
+    background: linear-gradient(to bottom right, lightgoldenrodyellow, #B2DFDB)
 }
 
 .newEvent:hover {
@@ -38,13 +39,51 @@
     box-shadow: 1px 1px 6px 3px #607d8b87;
 }
 
+
+.addTask, .addBtn {
+    box-shadow: 1px 1px 6px 3px #607d8b87;
+    background: linear-gradient(to bottom right, rgb(6, 129, 6), rgb(1, 66, 1));
+    padding: 10px 20px;
+    font-size: 15px;
+    color: whitesmoke;
+    margin-top: 2%;
+    border-radius: 5px;
+}
+
+a.addBtn {
+    font-size: 15px;
+    padding: 1% 2%;
+    height: 20px;
+}
+
+#details input:focus, #details select:focus {
+    border: 1px solid rgba(0, 128, 0, 0.952);
+}
+
 .allEventsContainer {
     position: relative;
 } 
 
-body {
-    background: linear-gradient(to bottom right, white, rgba(114, 110, 110, 0.329));
+form.form-control {
+    padding: 7% 2%;
+    margin-top: 2%;
+    box-shadow: 3px 3px 16px 4px #81c78494;
 }
+
+select#LocationId {
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+ body {
+    background: linear-gradient(to bottom right, white, rgba(114, 110, 110, 0.329));
+    padding-bottom: 2%;
+}
+
+/* html {
+    background-color: rgba(0, 0, 0, 0.856);
+} */
+
 .cardContainer {
     margin-top: 10%;
 }
@@ -103,4 +142,14 @@ tr:nth-child(odd).table-dark, tr:nth-child(odd).table-dark a {
     color: white;
     font-size: 28px;
     border-radius: 5px;
+}
+
+.form-control {
+    padding: 9px;
+}
+
+#details label {
+    color: darkgreen;
+    font-size: 17px;
+    margin-right: 2%;
 }

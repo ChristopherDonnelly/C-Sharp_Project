@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Add Locations";
 }
-
+<link rel="stylesheet" href="~/css/location.css" />
 <div class="row">
     <div class="col-12 mx-auto mt-5">
         <h2 class="text-center">@ViewData["Title"]</h2>
@@ -13,7 +13,7 @@
                     <div class="card-header">
                         <h4>@Model.Event.Name</h4>
                     </div>
-                    <div class="card-body pr-0 pb-0">
+                    <div class="card-body px-0 pb-0">
                         <h5>Locations:</h5>
                         <div id="locations">
                             @{
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="col-lg-8 col-md-12 pb-4 order-lg-last order-md-first order-sm-first order-xs-first">
-                <div class="card text-center">
+                <div class="card mt-2">
                     <div id="map" class="intrinsic-container intrinsic-container-16x9 card-body">
 
                     </div>
