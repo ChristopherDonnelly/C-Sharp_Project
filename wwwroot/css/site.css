@@ -71,6 +71,23 @@ td~td .btn.btn-dark {
 
 #locations {
     overflow-y: auto;
+    height: 348px;
+}
+
+input[type=text], input[type=email], input[type=password] {
+    border: 1px solid rgb(16,15,15,0.24);
+}
+
+@media (min-width: 992px) {
+    #locations {
+        height: 278px;
+    }
+}
+
+@media (min-width: 1200px) {
+    #locations {
+        height: 348px;
+    }    
 }
 
 @media (min-width: 0px) and (max-width: 576px) {
