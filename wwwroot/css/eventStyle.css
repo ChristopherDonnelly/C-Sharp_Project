@@ -30,7 +30,7 @@
 
 .newEvent {
     padding: 10px 24px;
-    background-color: #7aae3d;
+    background: linear-gradient(to bottom right, #7aae3d, green);
     color: white;
     font-size: 28px;
     right: 168px;
