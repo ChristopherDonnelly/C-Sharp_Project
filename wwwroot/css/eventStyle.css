@@ -1,10 +1,89 @@
 .card {
     width: 280px;
     text-align: center;
+    margin: 2%;
+    border-radius: 5px;
 }
 .head {
     font-size: 20px;
 }
-/* .card-header, .card-footer {
-    background-color: none;
-} */
+.card-container {
+    display: flex;
+    justify-content: space-around; 
+}
+.description {
+    font-size: 19px;
+    color: rgba(37, 147, 37, 0.87);
+}
+
+.newEvent {
+    padding: 10px 24px;
+    background-color: #7aae3d;
+    color: white;
+    font-size: 28px;
+    right: 168px;
+    position: absolute;
+}
+
+.allEventsContainer {
+    position: relative;
+} 
+.cardContainer {
+    margin-top: 10%;
+}
+
+.card-header {
+    background-color: #9e9e9e4f;
+}
+
+.col-12 input {
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.addEvent {
+    padding: 17px 24px;
+}
+
+.header h1 {
+    margin-top: 2%;
+}
+
+.bg-secondary {
+    background-color: white !important;
+    color: black;
+    border-radius: 5px;
+    border: 1px solid rgba(37, 147, 37, 0.87);
+}
+
+.darkerGreen {
+    color: #618462;
+} 
+
+tr:nth-child(even).table-dark, tr:nth-child(even).table-dark a {
+    background-color:  white !important;
+    color: black;
+}
+tr:nth-child(odd).table-dark, tr:nth-child(odd).table-dark a {
+    background-color:  #4f4b4b !important;
+    color: white;
+}
+
+.table-dark:hover {
+    background-color:  rgba(255, 255, 255, 0) !important;
+}
+
+.table th, .table td {
+    padding: 11px;
+}
+.table-dark, .table-dark > th, .table-dark > td {
+    background-color: #3578bb00;
+}
+
+.addBtn {
+    padding: 10px 24px;
+    background-color: #7aae3d;
+    color: white;
+    font-size: 28px;
+    border-radius: 5px;
+}

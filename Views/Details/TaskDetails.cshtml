@@ -1,8 +1,8 @@
 
-<h3 style="font-size: 4em; text-align: center; color: #007aff;">Task: @ViewBag.CurrentTask.Name</h3>
+<h3 style="font-size: 4em; text-align: center;">Task: @ViewBag.CurrentTask.Name</h3>
 
 <div class="row mt-3">
-    <div class="col-sm-11 border border-primary rounded p-3 mb-2 bg-primary text-white" style="height: 200px;">
+    <div class="col-sm-11 p-3 mb-2 bg-secondary text-white" style="height: 200px;">
         <h3 style="text-align: center;">Description</h3>
         <hr>
         <p style="text-align: center;">@ViewBag.CurrentTask.Description</p>
@@ -10,7 +10,7 @@
 </div>
 
 <div class="row mt-3">
-    <div class="col-sm-3 border border-primary rounded p-1 mb-2 bg-primary text-white" style="height: 300px; text-align: center;">
+    <div class="col-sm-3 p-1 mb-2 bg-secondary text-white" style="height: 300px; text-align: center;">
         <br>
         <h5>Start : </h5>
         <h6>@ViewBag.CurrentTask.StartTime.ToString("MMMM dd @ hh:mm tt")</h6>
@@ -21,13 +21,13 @@
 
     <div class="col-sm-1"></div>
 
-    <div class="col-sm-3 border border-primary rounded p-1 mb-2 bg-primary text-white" style="height: 300px;">
+    <div class="col-sm-3 p-1 mb-2 bg-secondary text-white" style="height: 300px;">
         <iframe src = 'https://www.google.com/maps/embed/v1/place?key=AIzaSyBCnCe8iUWcI6SQtR3K04u3lVDrblCLgcU&q=@ViewBag.CurrentTask.Loc.Name' width = "100%" height="100%" frameBorder="0"></iframe>
     </div>
 
     <div class="col-sm-1"></div>
 
-    <div class="col-sm-3 border border-primary rounded p-3 mb-2 bg-primary text-white" style=" min-height: 300px; text-align: center;">
+    <div class="col-sm-3 p-3 mb-2 bg-secondary text-white" style=" min-height: 300px; text-align: center;">
         <h3 style="text-align: center;">Volunteers</h3>
         <hr>
             @foreach(var person in @ViewBag.CurrentTask.TaskVolunteers)
@@ -38,7 +38,10 @@
 </div>
 
 <div class="row mt-3">
-    <div class="m-auto">
-        <a class="btn btn-primary" asp-controller="Details" asp-action="Dashboard" asp-route-id="@ViewBag.ConfirmedEvent.EventId"> Go back to event details</a>
+
+    <div class="col-sm-4"></div>
+
+    <div>
+       <a asp-controller="Details" asp-action="Dashboard" class="addBtn" asp-route-id="@ViewBag.ConfirmedEvent.EventId"> Event Details</a>
     </div>
 </div>

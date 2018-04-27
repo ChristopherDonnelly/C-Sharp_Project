@@ -1,55 +1,55 @@
-<h1 style="font-size: 4em; text-align: center; color: #007aff;">@ViewBag.ConfirmedEvent.Name</h1>
+<h1 style="font-size: 4em; text-align: center;" class="eventName">@ViewBag.ConfirmedEvent.Name</h1>
 
 <div class="row mt-3">
-    <div class="col-sm-3 border border-primary rounded p-3 mb-2 bg-primary text-white" style="height: 300px;">
+    <div class="col-sm-3 p-3 mb-2 bg-primary bg-secondary" style="height: 300px;">
         <h3 style="text-align: center;">Overview</h3>
         <hr>
-        <p style="text-align: center;">@ViewBag.ConfirmedEvent.Description</p>
+        <p style="text-align: center;" class="darkerGreen">@ViewBag.ConfirmedEvent.Description</p>
     </div>
 
     <div class="col-sm-1"></div>
 
-    <div class="col-sm-3 border border-primary rounded p-1 mb-2 bg-primary text-white" style="height: 300px;">
+    <div class="col-sm-3 p-1 mb-2 bg-primary bg-secondary" style="height: 300px;">
         <iframe src = 'https://www.google.com/maps/embed/v1/place?key=AIzaSyBCnCe8iUWcI6SQtR3K04u3lVDrblCLgcU&q=@ViewBag.ConfirmedEvent.Address' width = "100%" height="100%" frameBorder="0"></iframe>
-        <!-- <img src="~/images/MapPlaceholder.png" class="img-rounded" alt="Map Location" style="height: 300px; width: 100%; height: 100%;"> -->
+        <!-- <img src="~/images/MapPlaceholder.png" class="img" alt="Map Location" style="height: 300px; width: 100%; height: 100%;"> -->
     </div>
 
     <div class="col-sm-1"></div>
 
-    <div class="col-sm-3 border border-primary rounded p-3 mb-2 bg-primary text-white" style=" min-height: 300px;">
+    <div id="bg-secondary" class="col-sm-3 p-3 mb-2 bg-primary bg-secondary" style=" min-height: 300px;">
         <h3 style="text-align: center;">Unassigned Volunteers</h3>
         <hr>
             @foreach(var person in @ViewBag.UnassignedVolunteers)
             {
-                <h5>@person.FirstName</h5>
+                <h5 class="darkerGreen">@person.FirstName</h5>
             }
     </div>
 
-    <div class="col-sm-7 border border-primary rounded p-3 mb-2 bg-primary text-white" style=" min-height: 300px;">
+    <div class="col-sm-7 p-3 mb-2 bg-primary bg-secondary" style=" min-height: 300px;">
         <h3 style="text-align: center;">Task List</h3>
-        <a class="btn btn-light border-success" asp-controller="Details" asp-action="NewTask" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> + Add new</a>
-        <table class="table table-striped mt-3">
+        <a class="addBtn" asp-controller="Details" asp-action="NewTask" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> + Add new</a>
+        <table class="table table-hover table-striped">
             <thead>
             <tr>
-                <th>Task</th>
-                <th>Location</th>
-                <th>Volunteers</th>
-                <th>Date / Time</th>
-                <th>Action</th>
+                <th scope="col">Task</th>
+                <th scope="col">Location</th>
+                <th scope="col">Volunteers</th>
+                <th scope="col">Date / Time</th>
+                <th scope="col">Action</th>
             </tr>
             </thead>
             <tbody>
                 @foreach(var tsk in @ViewBag.ConfirmedEvent.Tasks)
                 {
-                    <tr>
-                        <td><a class="text-white" asp-controller="Details" asp-action="TaskDetails" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"><u>@tsk.Name</u></a></td>
+                    <tr class="table-dark">
+                        <td><a style="; text-decoration: underline;" asp-controller="Details" asp-action="TaskDetails" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> @tsk.Name </a></td>
                         <td>@tsk.Loc.Name </td>
                         <td>@tsk.TaskVolunteers.Count of @tsk.Capacity</td>
                         <td>@tsk.StartTime.ToString("MMMM dd @ hh:mm tt")</td>
                         
                         @if(@ViewBag.ConfirmedEvent.CoordinatorId == @ViewBag.ConfirmedUser.UserId)
                         {
-                            <td><a class="btn btn-light border-success" asp-controller="Details" asp-action="DeleteTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Delete </a></td>
+                            <td><a style="; text-decoration: underline;" asp-controller="Details" asp-action="DeleteTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Delete </a></td>
                         }
                         else
                         {
@@ -63,11 +63,11 @@
                             }
                             @if(tvol == true)
                             {
-                                <td><a class="btn btn-light border-success" asp-controller="Details" asp-action="LeaveTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Leave </a></td>
+                                <td><a style="; text-decoration: underline;" asp-controller="Details" asp-action="LeaveTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Leave </a></td>
                             }
                             else
                             {
-                                <td><a class="btn btn-light border-success" asp-controller="Details" asp-action="JoinTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Join </a></td>
+                                <td><a style="; text-decoration: underline;" asp-controller="Details" asp-action="JoinTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Join </a></td>
                             }
                         }
                     </tr>
@@ -78,7 +78,7 @@
 
     <div class="col-sm-1"></div>
 
-    <div class="col-sm-3 border border-primary rounded p-3 mb-2 bg-primary text-white" style=" min-height: 300px;">
+    <div class="col-sm-3 p-3 mb-2 bg-primary bg-secondary" style=" min-height: 300px;">
         <h3 style="text-align: center;">Assigned Volunteers</h3>
         <hr>
         @foreach(var person in @ViewBag.AssignedVolunteers)
