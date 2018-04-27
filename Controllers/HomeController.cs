@@ -54,7 +54,8 @@ namespace C_Sharp_Project.Controllers
                     _context.event_volunteers.Add(new EventVolunteer{  EventId = eventInfo.EventId, UserId = (int)ViewData["UserId"] });
                     _context.SaveChanges();
 
-                    return RedirectToAction("Dashboard", "Details", new { id = eventInfo.EventId }); 
+                    return RedirectToAction("CreateLocation", "Create", new { EventId = eventInfo.EventId }); 
+                    // return RedirectToAction("Dashboard", "Details", new { id = eventInfo.EventId }); 
                     // Dashboard.cshtml, View Details, Controller Details (Mark's)                
                 }
             } else {

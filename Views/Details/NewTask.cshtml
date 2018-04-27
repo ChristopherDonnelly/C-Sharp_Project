@@ -3,7 +3,7 @@
 <div class="header">
     <a asp-controller="Events" asp-action="Home">Home</a>
     <a asp-controller="User" asp-action="Logoff">Log Out</a>
-    <h1>Add an Event</h1>
+    <h1>Add a Task</h1>
 </div>
 <form asp-controller="Details" asp-action="NewTask" method="POST" class="form-control">
     <input asp-for="EventId" type="hidden">
@@ -36,8 +36,8 @@
         <span asp-validation-for="EndTime" class="d-block pl-3 offset-3 text-danger"></span>
     </div>
 
-    <div>
-        <label>Location: (Hard Coded)</label>
+    <div class="col-12 mb-3">
+        <label class="d-inline-block col-3 p-0 text-right">Location: (Hard Coded)</label>
         <select>
             <option value="DummyValue">Dummy Value</option>
             <option value="DummyValue2">Dummy Value</option>
