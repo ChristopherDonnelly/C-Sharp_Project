@@ -3,7 +3,6 @@
 
 <div class="allEventsContainer mt-5">
     <h1>All Events</h1>
-<<<<<<< HEAD
     <a class="newEvent" asp-controller="Home" asp-action="New">New Event</a>
     <div class="row cardContainer">
         @foreach(var e in @Model)
@@ -43,43 +42,3 @@
         }
     </div>
 </div>
-=======
-    <a class="btn btn-primary btn-sm" asp-controller="Home" asp-action="New">New Event</a>
-    @foreach(var e in @Model)
-    {
-        <div class="card mt-3">
-            <div class="card-header">
-                @if(e.CoordinatorId == (int)ViewData["UserId"]) 
-                {
-                    <a class="close" aria-label="Close" asp-controller="Home" asp-action="DeleteEvent" asp-route-eventId="@e.EventId">
-                        <span aria-hidden="true">&times;</span>
-                    </a>
-                }
-                <a asp-controller="Details" asp-action="Dashboard" asp-route-id="@e.EventId">@e.Name</a>
-            </div>
-            <div class="card-body">
-                <p>@e.Description</p>
-                <p>@e.StartDate</p>
-                <p>(@e.GetDuration(@e.StartDate, @e.EndDate).ToString(@"hh\:mm"))</p>
-            </div> 
-            <div class="card-footer">
-                <a class="btn btn-primary btn-sm" asp-controller="Home" asp-action="JoinLeave" asp-route-eventId="@e.EventId" asp-route-location="AllEvents">
-                    @if(@e.HasJoined( (int) @ViewData["UserId"] ))
-                    {
-                        <span>Leave</span>
-                    } else {
-                        <span>Join</span>
-                    }
-                </a>
-                    @if(e.CoordinatorId == (int)ViewData["UserId"]) 
-                    {
-                        <span>| <a class="btn btn-primary btn-sm" asp-controller="Create" asp-action="CreateLocation" asp-route-EventId="@e.EventId">Add/Edit Locations</a></span>
-                    }
-                
-            </div>
-        </div>
-    }
-</div>
-
-
->>>>>>> 0189a23b5871b0ad5044ffb7d4f97bb34d13831e
