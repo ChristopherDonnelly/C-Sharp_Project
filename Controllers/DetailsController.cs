@@ -53,10 +53,6 @@ namespace C_Sharp_Project.Controllers
                     if(tsk.TaskId == TaskId)
                     {
                         ViewBag.CurrentTask = tsk;
-                        foreach(var dude in tsk.TaskVolunteers)
-                        {
-                            System.Console.WriteLine(dude.User.FirstName);
-                        }
                     }
                 }
                 return View();

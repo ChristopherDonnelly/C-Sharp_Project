@@ -76,9 +76,24 @@ namespace VolunteerPlanner.Models
 
         public TimeSpan GetDuration(DateTime StartDate, DateTime EndDate)
         {
-            TimeSpan duration = StartDate.Subtract(EndDate);
+            TimeSpan Days = EndDate.Date.Subtract(StartDate.Date);
+            TimeSpan Time = EndDate.TimeOfDay.Subtract(StartDate.TimeOfDay);
+            TimeSpan duration = EndDate.Subtract(StartDate);
             return duration;
         }
+
+        public TimeSpan GetDurationTime(DateTime StartDate, DateTime EndDate)
+        {
+            TimeSpan Time = EndDate.TimeOfDay.Subtract(StartDate.TimeOfDay);
+            return Time;
+        }
+
+        public TimeSpan GetDurationDays(DateTime StartDate, DateTime EndDate)
+        {
+            TimeSpan Days = EndDate.Date.Subtract(StartDate.Date);
+            return Days;
+        }
+
 
         // public class CurrentDateAttribute : ValidationAttribute
         // {
