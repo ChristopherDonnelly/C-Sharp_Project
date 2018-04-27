@@ -65,8 +65,8 @@ namespace C_Sharp_Project.Controllers
                 ViewBag.AssignedVolunteers = AssignedVolunteerInfo(EventId);
                 ViewBag.UnassignedVolunteers = UnassignedVolunteerInfo(EventId);
 
+                task.EventId = EventId;
                 _context.tasks.Add(task);
-                _context.tasks.Add(new TaskInfo{ Name = task.Name,  });
                 _context.SaveChanges();
 
                 return RedirectToAction("Dashboard", "Details", new { id = EventId }); 
