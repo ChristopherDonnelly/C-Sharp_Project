@@ -39,8 +39,10 @@
     <div class="col-12 mb-3">
         <label class="d-inline-block col-3 p-0 text-right">Location: (Hard Coded)</label>
         <select>
-            <option value="DummyValue">Dummy Value</option>
-            <option value="DummyValue2">Dummy Value</option>
+            @foreach(var loc in @ViewBag.ConfirmedEvent.Locations)
+            {
+                <option value="@loc.LocationId">@loc.Name</option>
+            }
         </select>
     </div>
 
