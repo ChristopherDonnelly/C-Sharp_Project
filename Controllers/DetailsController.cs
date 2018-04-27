@@ -55,21 +55,16 @@ namespace C_Sharp_Project.Controllers
         }
 
         [HttpPost]
-        [Route("NewTask")]
-        public IActionResult NewTask(TaskInfo task, int EventId)
+        [Route("CreateTask")]
+        public IActionResult CreateTask(TaskInfo task)
         {
             if(isLoggedIn()){
                 setSessionViewData();
-                GetEventInfo(EventId);
-                GetUserInfo();
-                ViewBag.AssignedVolunteers = AssignedVolunteerInfo(EventId);
-                ViewBag.UnassignedVolunteers = UnassignedVolunteerInfo(EventId);
 
-                task.EventId = EventId;
                 _context.tasks.Add(task);
                 _context.SaveChanges();
 
-                return RedirectToAction("Dashboard", "Details", new { id = EventId }); 
+                return RedirectToAction("Dashboard", "Details", new { id = task.EventId }); 
             }else{
                 return RedirectToAction(_action, _controller);
             }
