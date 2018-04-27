@@ -32,6 +32,10 @@
         <hr>
             @foreach(var person in @ViewBag.CurrentTask.TaskVolunteers)
             {
+                @if(person == null)
+                {
+                    break;
+                }
                 <h5>@person.User.FirstName</h5>
             }
     </div>
