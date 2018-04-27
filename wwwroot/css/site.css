@@ -71,22 +71,41 @@ td~td .btn.btn-dark {
 
 #locations {
     overflow-y: auto;
-    height: 348px;
+    height: 305px;
 }
 
 input[type=text], input[type=email], input[type=password] {
     border: 1px solid rgb(16,15,15,0.24);
 }
 
+p.form-control {
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+
+
+@keyframes example {
+    from {background-color: black;}
+    to {background-color: #b1b1b1;}
+}
+
+/* The element to apply the animation to */
+.btn-primary:hover {
+    background-color: #b1b1b1;
+    animation-name: example;
+    animation-duration: 1s;
+}
+
 @media (min-width: 992px) {
     #locations {
-        height: 278px;
+        height: 305px;
     }
 }
 
 @media (min-width: 1200px) {
     #locations {
-        height: 348px;
+        height: 370px;
     }    
 }
 
