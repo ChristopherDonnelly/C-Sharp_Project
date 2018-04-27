@@ -30,25 +30,6 @@ namespace C_Sharp_Project.Controllers
         {
             if(isLoggedIn()){
                 setSessionViewData();
-                
-                // _context.events.Include(e => e.EventVolunteers).ThenInclude(u => u.User).Where().ToList();
-
-                // User user = _context.users.Include( e => e.Events ).ThenInclude( j => j.Event ).SingleOrDefault(u => u.UserId == (int)ViewData["UserId"]);
-                // List<Event> events = _context.events.Include( j => j.EventVolunteers ).ThenInclude( u => u.User ).ToList();
-
-                // Console.WriteLine("*************************************");
-                // for(int i=0; i<user.Events.Count; i++){
-                //     Console.WriteLine(" Joined Event Name: " + user.Events[i].Event.Name);
-                // }
-                // foreach(Event e in events)
-                // {
-                //     Console.WriteLine(" Event Name: "+ e.Name);
-
-                //     for(int j=0; j<e.EventVolunteers.Count; j++){
-                //         Console.WriteLine(" Volunteer Name: "+ e.EventVolunteers[j].User.FirstName);
-                //     }
-                // }
-                // Console.WriteLine("*************************************");
 
                 Event Event = _context.events.Include( j => j.EventVolunteers ).ThenInclude( u => u.User ).SingleOrDefault( e => e.EventId == EventId);
                 List<Location> Locations = _context.locations.Include( j => j.Event ).Where(e => e.EventId == EventId).ToList();
@@ -57,6 +38,19 @@ namespace C_Sharp_Project.Controllers
             }else{
                 return RedirectToAction(_action, _controller);
             }
+        }
+
+        [HttpPost]
+        [Route("AddLocation")]
+        public JsonResult AddLocation([FromBody] Location location)
+        {
+
+            Console.WriteLine(location.EventId);
+            Console.WriteLine(location.Name);
+            Console.WriteLine(location.Lat);
+            Console.WriteLine(location.Lng);
+
+            return Json(new{ success = true});
         }
 
         private void setSessionViewData()
