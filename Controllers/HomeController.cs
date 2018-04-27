@@ -54,7 +54,7 @@ namespace C_Sharp_Project.Controllers
                     _context.event_volunteers.Add(new EventVolunteer{  EventId = eventInfo.EventId, UserId = (int)ViewData["UserId"] });
                     _context.SaveChanges();
 
-                    return RedirectToAction("Dummy", new { eventId = eventInfo.EventId }); 
+                    return RedirectToAction("Dashboard", "Details", new { id = eventInfo.EventId }); 
                     // Dashboard.cshtml, View Details, Controller Details (Mark's)                
                 }
             } else {
@@ -148,10 +148,11 @@ namespace C_Sharp_Project.Controllers
             return RedirectToAction(_action, _controller);
         }
 
-        private void setSessionViewData()
+        public void setSessionViewData()
         {
             ViewData["Username"] = HttpContext.Session.GetString("UserName");
             ViewData["UserId"] = (int)HttpContext.Session.GetInt32("UserId");
+            ViewData["WholeUser"] = _context.users.SingleOrDefault(u => u.UserId == (int)ViewData["UserId"]);
         }
 
         public bool isLoggedIn(){
