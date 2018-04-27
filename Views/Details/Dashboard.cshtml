@@ -27,8 +27,13 @@
 
     <div class="col-sm-7 p-3 mb-2 bg-primary bg-secondary" style=" min-height: 300px;">
         <h3 style="text-align: center;">Task List</h3>
+<<<<<<< HEAD
         <a class="addBtn" asp-controller="Details" asp-action="NewTask" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> + Add new</a>
         <table class="table table-hover table-striped">
+=======
+        <a class="btn btn-light border-success" asp-controller="Details" asp-action="NewTask" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> + Add new</a>
+        <table class="table table-striped mt-3">
+>>>>>>> 0189a23b5871b0ad5044ffb7d4f97bb34d13831e
             <thead>
             <tr>
                 <th scope="col">Task</th>
@@ -41,15 +46,24 @@
             <tbody>
                 @foreach(var tsk in @ViewBag.ConfirmedEvent.Tasks)
                 {
+<<<<<<< HEAD
                     <tr class="table-dark">
                         <td><a style="; text-decoration: underline;" asp-controller="Details" asp-action="TaskDetails" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> @tsk.Name </a></td>
+=======
+                    <tr>
+                        <td><a class="text-white" asp-controller="Details" asp-action="TaskDetails" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"><u>@tsk.Name</u></a></td>
+>>>>>>> 0189a23b5871b0ad5044ffb7d4f97bb34d13831e
                         <td>@tsk.Loc.Name </td>
                         <td>@tsk.TaskVolunteers.Count of @tsk.Capacity</td>
                         <td>@tsk.StartTime.ToString("MMMM dd @ hh:mm tt")</td>
                         
                         @if(@ViewBag.ConfirmedEvent.CoordinatorId == @ViewBag.ConfirmedUser.UserId)
                         {
+<<<<<<< HEAD
                             <td><a style="; text-decoration: underline;" asp-controller="Details" asp-action="DeleteTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Delete </a></td>
+=======
+                            <td><a class="btn btn-light border-success" asp-controller="Details" asp-action="DeleteTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Delete </a></td>
+>>>>>>> 0189a23b5871b0ad5044ffb7d4f97bb34d13831e
                         }
                         else
                         {
@@ -63,11 +77,19 @@
                             }
                             @if(tvol == true)
                             {
+<<<<<<< HEAD
                                 <td><a style="; text-decoration: underline;" asp-controller="Details" asp-action="LeaveTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Leave </a></td>
                             }
                             else
                             {
                                 <td><a style="; text-decoration: underline;" asp-controller="Details" asp-action="JoinTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Join </a></td>
+=======
+                                <td><a class="btn btn-light border-success" asp-controller="Details" asp-action="LeaveTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Leave </a></td>
+                            }
+                            else
+                            {
+                                <td><a class="btn btn-light border-success" asp-controller="Details" asp-action="JoinTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Join </a></td>
+>>>>>>> 0189a23b5871b0ad5044ffb7d4f97bb34d13831e
                             }
                         }
                     </tr>
