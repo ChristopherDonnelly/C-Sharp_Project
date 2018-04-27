@@ -13,8 +13,8 @@ namespace VolunteerPlanner.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public int Capacity { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public DateTime StartTime { get; set; } = DateTime.Now;
+        public DateTime EndTime { get; set; } = DateTime.Now;
 
         // [ForeignKey("EventId")]
         public int EventId { get; set; }

@@ -16,7 +16,10 @@
         <div class="row mt-4">
             <div class="col-sm-12 p-3 bg-primary bg-secondary" style="height: 300px;">
                 <h3 style="text-align: center;">Task List</h3>
-                <a class="addBtn" asp-controller="Details" asp-action="NewTask" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> + Add Task</a>
+                <div class="row">
+                    <a class="addBtn col-4 ml-3 text-center" asp-controller="Details" asp-action="NewTask" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> + Add Task</a>
+                    <a class="addBtn col-4 ml-auto mr-3 text-center" asp-controller="Create" asp-action="CreateLocation" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId">Add/Edit Locations</a>
+                </div>
                 <div class="tableContent">
                     <table class="table table-striped">
                         <thead>
