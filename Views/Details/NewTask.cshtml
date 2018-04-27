@@ -37,8 +37,8 @@
     </div>
 
     <div class="col-12 mb-3">
-        <label class="d-inline-block col-3 p-0 text-right">Location: (Hard Coded)</label>
-        <select asp-for="LocationId" >
+        <label class="d-inline-block col-3 p-0 text-right">Location: </label>
+        <select>
             @foreach(var loc in @ViewBag.ConfirmedEvent.Locations)
             {
                 <option value="@loc.LocationId">@loc.Name</option>
