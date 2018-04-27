@@ -16,7 +16,7 @@ namespace VolunteerPlanner.Models
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
 
-        [ForeignKey("Event")]
+        // [ForeignKey("EventId")]
         public int EventId { get; set; }
         public Event Event { get; set; }
 

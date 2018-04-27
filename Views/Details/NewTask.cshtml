@@ -5,8 +5,8 @@
     <a asp-controller="User" asp-action="Logoff">Log Out</a>
     <h1>Add a Task</h1>
 </div>
-<form asp-controller="Details" asp-action="NewTask" method="POST" class="form-control">
-    <input asp-for="EventId" type="hidden">
+<form asp-controller="Details" asp-action="CreateTask" method="POST" class="form-control">
+    <input asp-for="EventId" type="hidden" value="@ViewBag.ConfirmedEvent.EventId">
    
     <div class="col-12 mb-3">
         <label asp-for="Name" class="d-inline-block col-3 p-0 text-right"></label>
@@ -37,8 +37,13 @@
     </div>
 
     <div class="col-12 mb-3">
+<<<<<<< HEAD
         <label class="d-inline-block col-3 p-0 text-right">Location: </label>
         <select>
+=======
+        <label class="d-inline-block col-3 p-0 text-right">Location: (Hard Coded)</label>
+        <select asp-for="LocationId" >
+>>>>>>> c556dcf35ba8c6d3e565f19e6c87ed294a32b5c0
             @foreach(var loc in @ViewBag.ConfirmedEvent.Locations)
             {
                 <option value="@loc.LocationId">@loc.Name</option>

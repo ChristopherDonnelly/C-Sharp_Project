@@ -42,7 +42,7 @@
                 @foreach(var tsk in @ViewBag.ConfirmedEvent.Tasks)
                 {
                     <tr>
-                        <td>@tsk.Name</td>
+                        <td><a style="color: white; text-decoration: underline;" asp-controller="Details" asp-action="TaskDetails" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> @tsk.Name </a></td>
                         <td>@tsk.Loc.Name </td>
                         <td>@tsk.TaskVolunteers.Count of @tsk.Capacity</td>
                         <td>@tsk.StartTime.ToString("MMMM dd @ hh:mm tt")</td>
