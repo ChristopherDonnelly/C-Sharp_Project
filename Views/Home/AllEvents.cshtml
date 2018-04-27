@@ -35,7 +35,8 @@
                         <div class="card-text">
                             <p class="description">@e.Description</p>
                                     <p>@e.StartDate.ToString("M/dd/yyy H:mm tt")</p>
-                                    <p>(@e.GetDuration(@e.StartDate, @e.EndDate).ToString(@"hh\:mm"))</p>
+                                    <p>Duration: </p>
+                                    <p>@e.GetDurationDays(@e.StartDate, @e.EndDate).ToString(@"dd") days @e.GetDurationTime(@e.StartDate, @e.EndDate).ToString(@"hh\:mm") hours</p>
                         </div>
                     </div>
                 </div>

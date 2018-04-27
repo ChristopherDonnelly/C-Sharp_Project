@@ -53,10 +53,6 @@ namespace C_Sharp_Project.Controllers
                     if(tsk.TaskId == TaskId)
                     {
                         ViewBag.CurrentTask = tsk;
-                        foreach(var dude in tsk.TaskVolunteers)
-                        {
-                            System.Console.WriteLine(dude.User.FirstName);
-                        }
                     }
                 }
                 return View();
@@ -147,10 +143,6 @@ namespace C_Sharp_Project.Controllers
         {
             Event ConfirmedEvent = _context.events.Include(eventy => eventy.Locations).Include(e => e.EventVolunteers).ThenInclude(u => u.User).Include(t => t.Tasks).ThenInclude(l => l.Loc).Include(ta => ta.Tasks).ThenInclude(v => v.TaskVolunteers).SingleOrDefault(ev => ev.EventId == Id);
             ViewBag.ConfirmedEvent = ConfirmedEvent;
-            foreach(var loc in ConfirmedEvent.Locations)
-            {
-                System.Console.WriteLine(loc.Name);
-            }
             return ConfirmedEvent;
         }
         public void setSessionViewData()
