@@ -38,12 +38,7 @@
 </div>
 
 <div class="row mt-3">
-
-    <div class="col-sm-4"></div>
-
-    <div>
-        <button style="margin-left: 35%;"><a asp-controller="Details" asp-action="Dashboard" asp-route-id="@ViewBag.ConfirmedEvent.EventId"> Go back to event details</a></button>
+    <div class="m-auto">
+        <a class="btn btn-primary" asp-controller="Details" asp-action="Dashboard" asp-route-id="@ViewBag.ConfirmedEvent.EventId"> Go back to event details</a>
     </div>
-
-    <div class="col-sm-4"></div>
 </div>

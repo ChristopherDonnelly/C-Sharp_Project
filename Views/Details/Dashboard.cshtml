@@ -27,8 +27,8 @@
 
     <div class="col-sm-7 border border-primary rounded p-3 mb-2 bg-primary text-white" style=" min-height: 300px;">
         <h3 style="text-align: center;">Task List</h3>
-        <button><a asp-controller="Details" asp-action="NewTask" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> + Add new</a></button>
-        <table class="table table-striped">
+        <a class="btn btn-light border-success" asp-controller="Details" asp-action="NewTask" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> + Add new</a>
+        <table class="table table-striped mt-3">
             <thead>
             <tr>
                 <th>Task</th>
@@ -42,14 +42,14 @@
                 @foreach(var tsk in @ViewBag.ConfirmedEvent.Tasks)
                 {
                     <tr>
-                        <td><a style="color: white; text-decoration: underline;" asp-controller="Details" asp-action="TaskDetails" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> @tsk.Name </a></td>
+                        <td><a class="text-white" asp-controller="Details" asp-action="TaskDetails" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"><u>@tsk.Name</u></a></td>
                         <td>@tsk.Loc.Name </td>
                         <td>@tsk.TaskVolunteers.Count of @tsk.Capacity</td>
                         <td>@tsk.StartTime.ToString("MMMM dd @ hh:mm tt")</td>
                         
                         @if(@ViewBag.ConfirmedEvent.CoordinatorId == @ViewBag.ConfirmedUser.UserId)
                         {
-                            <td><a style="color: white; text-decoration: underline;" asp-controller="Details" asp-action="DeleteTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Delete </a></td>
+                            <td><a class="btn btn-light border-success" asp-controller="Details" asp-action="DeleteTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Delete </a></td>
                         }
                         else
                         {
@@ -63,11 +63,11 @@
                             }
                             @if(tvol == true)
                             {
-                                <td><a style="color: white; text-decoration: underline;" asp-controller="Details" asp-action="LeaveTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Leave </a></td>
+                                <td><a class="btn btn-light border-success" asp-controller="Details" asp-action="LeaveTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Leave </a></td>
                             }
                             else
                             {
-                                <td><a style="color: white; text-decoration: underline;" asp-controller="Details" asp-action="JoinTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Join </a></td>
+                                <td><a class="btn btn-light border-success" asp-controller="Details" asp-action="JoinTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Join </a></td>
                             }
                         }
                     </tr>

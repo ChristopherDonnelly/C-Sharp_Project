@@ -1,13 +1,12 @@
 @model List<VolunteerPlanner.Models.Event>
 <link rel="stylesheet" href="~/css/eventStyle.css" />
-<h3>Welcome, @ViewData["Username"]</h3>
 
-<div class="allEventsContainer">
+<div class="allEventsContainer mt-5">
     <h1>All Events</h1>
-    <a asp-controller="Home" asp-action="New">New Event</a>
+    <a class="btn btn-primary btn-sm" asp-controller="Home" asp-action="New">New Event</a>
     @foreach(var e in @Model)
     {
-        <div class="card">
+        <div class="card mt-3">
             <div class="card-header">
                 @if(e.CoordinatorId == (int)ViewData["UserId"]) 
                 {
@@ -23,18 +22,19 @@
                 <p>(@e.GetDuration(@e.StartDate, @e.EndDate).ToString(@"hh\:mm"))</p>
             </div> 
             <div class="card-footer">
-                <a asp-controller="Home" asp-action="JoinLeave" asp-route-eventId="@e.EventId" asp-route-location="AllEvents">
+                <a class="btn btn-primary btn-sm" asp-controller="Home" asp-action="JoinLeave" asp-route-eventId="@e.EventId" asp-route-location="AllEvents">
                     @if(@e.HasJoined( (int) @ViewData["UserId"] ))
                     {
                         <span>Leave</span>
                     } else {
                         <span>Join</span>
                     }
+                </a>
                     @if(e.CoordinatorId == (int)ViewData["UserId"]) 
                     {
-                        <span>| <a asp-controller="Create" asp-action="CreateLocation" asp-route-EventId="@e.EventId">Add Location</a></span>
+                        <span>| <a class="btn btn-primary btn-sm" asp-controller="Create" asp-action="CreateLocation" asp-route-EventId="@e.EventId">Add/Edit Locations</a></span>
                     }
-                </a>
+                
             </div>
         </div>
     }
