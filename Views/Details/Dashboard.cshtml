@@ -17,52 +17,54 @@
             <div class="col-sm-12 p-3 bg-primary bg-secondary" style="height: 300px;">
                 <h3 style="text-align: center;">Task List</h3>
                 <a class="addBtn" asp-controller="Details" asp-action="NewTask" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> + Add Task</a>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">Task</th>
-                            <th scope="col">Location</th>
-                            <th scope="col">Volunteers</th>
-                            <th scope="col">Date / Time</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach(var tsk in @ViewBag.ConfirmedEvent.Tasks)
-                        {
-                            <tr class="table-dark">
-                                <td><a style="; text-decoration: underline;" asp-controller="Details" asp-action="TaskDetails" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> @tsk.Name </a></td>
-                                <td>@tsk.Loc.Name </td>
-                                <td>@tsk.TaskVolunteers.Count of @tsk.Capacity</td>
-                                <td>@tsk.StartTime.ToString("MMMM dd @ hh:mm tt")</td>
-                                
-                                @if(@ViewBag.ConfirmedEvent.CoordinatorId == @ViewBag.ConfirmedUser.UserId)
-                                {
-                                    <td><a style="; text-decoration: underline;" asp-controller="Details" asp-action="DeleteTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Delete </a></td>
-                                }
-                                else
-                                {
-                                    var tvol = false;
-                                    @foreach(var person in @tsk.TaskVolunteers)
+                <div class="tableContent">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Task</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Volunteers</th>
+                                <th scope="col">Date / Time</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var tsk in @ViewBag.ConfirmedEvent.Tasks)
+                            {
+                                <tr class="table-dark">
+                                    <td><a style="; text-decoration: underline;" asp-controller="Details" asp-action="TaskDetails" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> @tsk.Name </a></td>
+                                    <td>@tsk.Loc.Name </td>
+                                    <td>@tsk.TaskVolunteers.Count of @tsk.Capacity</td>
+                                    <td>@tsk.StartTime.ToString("MMMM dd @ hh:mm tt")</td>
+                                    
+                                    @if(@ViewBag.ConfirmedEvent.CoordinatorId == @ViewBag.ConfirmedUser.UserId)
                                     {
-                                        @if(person.UserId == @ViewBag.ConfirmedUser.UserId)
-                                        {
-                                            tvol = true;
-                                        }
-                                    }
-                                    @if(tvol == true)
-                                    {
-                                        <td><a style="; text-decoration: underline;" asp-controller="Details" asp-action="LeaveTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Leave </a></td>
+                                        <td><a style="; text-decoration: underline;" asp-controller="Details" asp-action="DeleteTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Delete </a></td>
                                     }
                                     else
                                     {
-                                        <td><a style="; text-decoration: underline;" asp-controller="Details" asp-action="JoinTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Join </a></td>
+                                        var tvol = false;
+                                        @foreach(var person in @tsk.TaskVolunteers)
+                                        {
+                                            @if(person.UserId == @ViewBag.ConfirmedUser.UserId)
+                                            {
+                                                tvol = true;
+                                            }
+                                        }
+                                        @if(tvol == true)
+                                        {
+                                            <td><a style="; text-decoration: underline;" asp-controller="Details" asp-action="LeaveTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Leave </a></td>
+                                        }
+                                        else
+                                        {
+                                            <td><a style="; text-decoration: underline;" asp-controller="Details" asp-action="JoinTask" asp-route-TaskId="@tsk.TaskId" asp-route-EventId="@ViewBag.ConfirmedEvent.EventId"> Join </a></td>
+                                        }
                                     }
-                                }
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
