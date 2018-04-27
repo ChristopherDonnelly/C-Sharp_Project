@@ -23,6 +23,7 @@ namespace VolunteerPlanner.Models
         [ForeignKey("LocationId")]
         public int LocationId { get; set; }
         public Location Loc { get; set; }
+        // ViewBag.ConfirmedEvent
 
         public List<TaskVolunteer> TaskVolunteers { get; set; }
  

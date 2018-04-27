@@ -48,7 +48,7 @@ namespace C_Sharp_Project.Controllers
                 setSessionViewData();
                 GetEventInfo(id);
                 GetUserInfo();
-                return View();
+                return View(new TaskInfo());
             }else{
                 return RedirectToAction(_action, _controller);
             }
