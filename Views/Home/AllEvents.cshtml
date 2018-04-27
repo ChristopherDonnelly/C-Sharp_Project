@@ -19,7 +19,8 @@
             </div>
             <div class="card-body">
                 <p>@e.Description</p>
-                <p>@e.StartDate (@e.GetDuration(@e.StartDate, @e.EndDate))</p>
+                <p>@e.StartDate</p>
+                <p>(@e.GetDuration(@e.StartDate, @e.EndDate).ToString(@"hh\:mm"))</p>
             </div> 
             <div class="card-footer">
                 <a asp-controller="Home" asp-action="JoinLeave" asp-route-eventId="@e.EventId" asp-route-location="AllEvents">
