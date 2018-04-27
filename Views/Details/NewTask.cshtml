@@ -1,0 +1,51 @@
+@model VolunteerPlanner.Models.TaskInfo
+
+<div class="header">
+    <a asp-controller="Events" asp-action="Home">Home</a>
+    <a asp-controller="User" asp-action="Logoff">Log Out</a>
+    <h1>Add an Event</h1>
+</div>
+<form asp-controller="Details" asp-action="NewTask" method="POST" class="form-control">
+    <input asp-for="EventId" type="hidden">
+   
+    <div class="col-12 mb-3">
+        <label asp-for="Name" class="d-inline-block col-3 p-0 text-right"></label>
+        <input asp-for="Name" class="form-control d-inline-block col-8 m-auto" placeholder="Enter Name" aria-label="Enter Name" />
+        <span asp-validation-for="Description" class="d-block pl-3 offset-3 text-danger"></span>
+    </div>
+    <div class="col-12 mb-3">
+        <label asp-for="Description" class="d-inline-block col-3 p-0 text-right"></label>
+        <input asp-for="Description" class="form-control d-inline-block col-8 m-auto" placeholder="Enter Description" aria-label="Enter Description" />
+        <span asp-validation-for="Description" class="d-block pl-3 offset-3 text-danger"></span>
+    </div>
+    <div class="col-12 mb-3">
+        <label asp-for="Capacity" class="d-inline-block col-3 p-0 text-right"></label>
+        <input asp-for="Capacity" class="form-control d-inline-block col-8 m-auto" aria-label="Enter Capacity" />
+        <span asp-validation-for="Capacity" class="d-block pl-3 offset-3 text-danger"></span>
+    </div>
+    <div class="col-12 mb-3">
+        <label asp-for="StartTime" class="d-inline-block col-3 p-0 text-right"></label>
+        <input asp-for="StartTime" class="form-control d-inline-block col-7 m-auto" placeholder="Enter StartTime" aria-label="Enter Date" />
+        <i class="material-icons align-middle">date_range</i>
+        <span asp-validation-for="StartTime" class="d-block pl-3 offset-3 text-danger"></span>
+    </div>
+    <div class="col-12 mb-3">
+        <label asp-for="EndTime" class="d-inline-block col-3 p-0 text-right"></label>
+        <input asp-for="EndTime" class="form-control d-inline-block col-7 m-auto" placeholder="Enter EndTime" aria-label="Enter EndTime" />
+        <i class="material-icons align-middle">date_range</i>
+        <span asp-validation-for="EndTime" class="d-block pl-3 offset-3 text-danger"></span>
+    </div>
+
+    <div>
+        <label>Location: (Hard Coded)</label>
+        <select>
+            <option value="DummyValue">Dummy Value</option>
+            <option value="DummyValue2">Dummy Value</option>
+        </select>
+    </div>
+
+    <div class="col-12 text-right pr-5">
+        <button type="submit" class="btn btn-dark">Add Event</button>
+    </div>
+
+</form>
