@@ -145,7 +145,7 @@ namespace C_Sharp_Project.Controllers
         }
         public Event GetEventInfo(int Id)
         {
-            Event ConfirmedEvent = _context.events.Include(e => e.EventVolunteers).ThenInclude(u => u.User).Include(t => t.Tasks).ThenInclude(l => l.Loc).Include(ta => ta.Tasks).ThenInclude(v => v.TaskVolunteers).SingleOrDefault(ev => ev.EventId == Id);
+            Event ConfirmedEvent = _context.events.Include(eventy => eventy.Locations).Include(e => e.EventVolunteers).ThenInclude(u => u.User).Include(t => t.Tasks).ThenInclude(l => l.Loc).Include(ta => ta.Tasks).ThenInclude(v => v.TaskVolunteers).SingleOrDefault(ev => ev.EventId == Id);
             ViewBag.ConfirmedEvent = ConfirmedEvent;
             return ConfirmedEvent;
         }
