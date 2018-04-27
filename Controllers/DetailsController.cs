@@ -40,7 +40,6 @@ namespace C_Sharp_Project.Controllers
             }
         }
 
-<<<<<<< HEAD
         [HttpGet]
         [Route("JoinTask/{TaskId}/{EventId}")]
         public IActionResult JoinTask(int TaskId, int EventId)
@@ -70,9 +69,6 @@ namespace C_Sharp_Project.Controllers
         [HttpGet]
         [Route("DeleteTask/{TaskId}/{EventId}")]
         public IActionResult DeleteTask(int TaskId, int EventId)
-=======
-        private void setSessionViewData()
->>>>>>> efcf1d8cdbb1dad8ac72fe79415848457530b9b1
         {
             TaskInfo RetrievedTask = _context.tasks.SingleOrDefault(Task => Task.TaskId == TaskId);
             _context.tasks.Remove(RetrievedTask);
