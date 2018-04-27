@@ -8,26 +8,28 @@
     <div class="col-12 mx-auto mt-5">
         <h2 class="text-center">@ViewData["Title"]</h2>
         <div class="row mt-5">
-            <div class="col-lg-6 col-md-12 pb-4">
-                <div class="card">
+            <div class="col-lg-4 col-md-12 pb-4">
+                <div class="card h-100">
                     <div class="card-header">
                         <h4>@Model.Event.Name</h4>
                     </div>
                     <div class="card-body">
                         <h5>Locations:</h5>
-                        @{
-                            foreach (var location in @Model.Locations)
-                            {
-                                <p class="pl-4">@location.Name</p>
+                        <div id="locations">
+                            @{
+                                foreach (var location in @Model.Locations)
+                                {
+                                    <p class="pl-4" id="locationId_Title_@location.LocationId">@location.Name</p>
+                                }
                             }
-                        }
+                        </div>
                     </div>
                     <div class="card-footer text-muted">
                         <p class="mb-0">@@@Model.Event.Address</p>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-12 pb-4 order-lg-last order-md-first order-sm-first order-xs-first">
+            <div class="col-lg-8 col-md-12 pb-4 order-lg-last order-md-first order-sm-first order-xs-first">
                 <div class="card text-center">
                     <div id="map" class="intrinsic-container intrinsic-container-16x9 card-body">
 
@@ -96,7 +98,8 @@
 
                 for(let i=0; i<markers.length; i++){
                     let marker = markers[i];
-
+                    
+                    google.maps.event.clearListeners(marker, 'click');
                     google.maps.event.addListener(marker, 'click', (function(marker) {
                         return function() {
                             if(typeof(marker.title) != 'undefined'){
@@ -106,14 +109,12 @@
                             }
                             infowindow.open(map, marker);
 
-                            addDeleteFunctions($(infowindow.content));
+                            addDeleteFunctions();
   
                             $('.addLocation').off('submit').on('submit', function( event ) {
                                 event.preventDefault();
                                 
                                 marker.title = this.Name.value;
-
-                                $('.card-body').append('<p class="pl-4">' + marker.title + '</p>');
 
                                 $.ajax({
                                     headers: { 
@@ -135,20 +136,16 @@
                                         infowindow.setContent('<strong>'+marker.title+'</strong><br><form class="deleteLocation" action="deleteLocation" method="post"><input type="hidden" name="EventId" value="'+response.eventId+'" /><input type="hidden" name="LocationId" value="'+marker.id+'" /><button class="col btn btn-primary btn-sm mt-2" type="submit">Remove Location</button></form>');
                                         infowindow.close(map, marker);
 
-                                        addDeleteFunctions($(infowindow.content));
+                                        $('.card-body').append('<p id="locationId_Title_'+marker.id+'" class="pl-4">' + marker.title + '</p>');
+
+                                        addDeleteFunctions();
                                     }
                                 });
                             });
                         }
                     })(marker));
 
-                    function addDeleteFunctions($marker){
-                        console.log($marker)
-                        $marker.find('.deleteLocation').off('submit').on('submit', function( event ) {
-                            event.preventDefault();
-                        });
-                    }
-
+                    google.maps.event.clearListeners(marker, 'dragend');
                     google.maps.event.addListener(marker, 'dragend', function() {
                         $.ajax({
                             headers: { 
@@ -167,6 +164,20 @@
                                 console.log(response);
                             }
                         });
+                    });
+                }
+
+                function addDeleteFunctions(){
+                    $('.deleteLocation').off('submit').on('submit', function( event ) {
+                        event.preventDefault();
+                        let id = this.LocationId.value - 1;
+                        console.log("Location Id: " + this.LocationId.value);
+                        console.log("Marker Location Id: " + markers[this.LocationId.value - 1].id)
+                        console.log("Marker Location Title: " + markers[this.LocationId.value - 1].title)
+
+                        marker = markers[id];
+                        $("#locationId_Title_"+marker.id).remove();
+                        marker.setMap(null);
                     });
                 }
             }

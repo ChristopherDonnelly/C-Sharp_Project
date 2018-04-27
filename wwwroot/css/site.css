@@ -68,6 +68,11 @@ td~td .btn.btn-dark {
     width: 100%;
     height: 100%;
 }
+
+#locations {
+    overflow-y: auto;
+}
+
 @media (min-width: 0px) and (max-width: 576px) {
     .order-xs-first {
         -webkit-box-ordinal-group: 0;
