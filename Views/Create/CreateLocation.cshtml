@@ -28,8 +28,13 @@
                 </div>
             </div>
             <div class="col-lg-6 col-md-12 pb-4 order-lg-last order-md-first order-sm-first order-xs-first">
-                <div id="map" class="intrinsic-container intrinsic-container-16x9 card">
+                <div class="card text-center">
+                    <div id="map" class="intrinsic-container intrinsic-container-16x9 card-body">
 
+                    </div>
+                    <div class="card-footer">
+                        <a asp-controller="Details" asp-action="Dashboard" asp-route-id="@Model.Event.EventId" class="btn btn-primary my-2">Go to Event Details</a>
+                    </div>
                 </div>
             </div>
         </div>

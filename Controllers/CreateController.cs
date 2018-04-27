@@ -57,8 +57,23 @@ namespace C_Sharp_Project.Controllers
             Console.WriteLine("Location Id: "+ location.LocationId);
             Console.WriteLine("Location Lat: "+ location.Lat);
             Console.WriteLine("Location Lng: "+ location.Lng);
+
             Location dbLocation = _context.locations.SingleOrDefault(l => l.LocationId == location.LocationId);
-            dbLocation = location;
+            dbLocation.Lat = location.Lat;
+            dbLocation.Lng = location.Lng;
+
+            _context.SaveChanges();
+
+            return Json(new{ Success = true });
+        }
+
+        [HttpDelete]
+        [Route("DeleteLocation")]
+        public JsonResult DeleteLocation([FromBody] Location location)
+        {
+            Location dbLocation = _context.locations.SingleOrDefault(l => l.LocationId == location.LocationId);
+
+            _context.Remove(dbLocation);
             _context.SaveChanges();
 
             return Json(new{ Success = true });
