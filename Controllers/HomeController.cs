@@ -144,6 +144,7 @@ namespace C_Sharp_Project.Controllers
         public IActionResult New()
         {
             if (isLoggedIn()) {
+                setSessionViewData();
                 return View(new Event());
             }
             return RedirectToAction(_action, _controller);
