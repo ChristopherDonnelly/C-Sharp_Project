@@ -21,7 +21,7 @@ namespace C_Sharp_Project
             WebHost.CreateDefaultBuilder(args)
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseStartup<startup>()
+                .UseStartup<Startup>()
                 .UseIISIntegration()
                 .Build();
     }
