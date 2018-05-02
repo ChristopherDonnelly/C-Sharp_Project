@@ -1,9 +1,13 @@
 @model List<VolunteerPlanner.Models.Event>
+
+@{
+    ViewData["Title"] = "All Events";
+}
 <link rel="stylesheet" href="~/css/eventStyle.css" />
 
 <div class="allEventsContainer mt-5">
-    <h1>All Events</h1>
-    <a class="newEvent" asp-controller="Home" asp-action="New">New Event</a>
+    <h1 class="text-center">@ViewData["Title"]</h1>
+    <a class="btn btn-primary my-2" asp-controller="Home" asp-action="New">New Event</a>
     <div class="row cardContainer">
         @foreach(var e in @Model)
         {
