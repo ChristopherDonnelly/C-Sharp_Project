@@ -16,9 +16,9 @@
                         <a asp-controller="Home" asp-action="JoinLeave" asp-route-eventId="@e.EventId" asp-route-location="AllEvents">
                             @if(@e.HasJoined( (int) @ViewData["UserId"] ))
                             {
-                                <span>Leave</span>
+                                <span>Leave Event</span>
                             } else {
-                                <span>Join</span>
+                                <span>Join Event</span>
                             }
                         </a>
                         @if(e.CoordinatorId == (int)ViewData["UserId"]) 
